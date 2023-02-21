@@ -60,11 +60,37 @@ public class GrabThrowBall : MonoBehaviour
 
         yield return new WaitForSeconds(throwDelay);
 
+        // Orientation of throwPoint
+        ThrowPointOrientation();
+
         // Release the ball
         ball.transform.parent = null;
 
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward *ballRB.mass*throwForce, ForceMode.Impulse);
 
+    }
+
+    // The net's position
+    public Transform net;
+
+    // Net's height
+    private float netHeight = 2.43f;
+
+    // The distance between the player and the net
+    public float netDistance;
+
+    // Adapts the Orientation of the throw to the height of the net
+    private void ThrowPointOrientation()
+    {
+        // Retrieves the distance to the net 
+        netDistance = transform.position.x - net.position.x;
+
+        // Calculate the right angle to throw the ball over the net 
+        float angle = Mathf.Atan((netHeight-throwPoint.position.y)/netDistance);
+        angle = Mathf.Clamp(angle, 0.0f, Mathf.PI / 2.0f); // Mathf.PI reduces the angle to max 90° otherwise the ball wouldn't^pass the net
+
+        // Set the throwPoint rotation based on the calculated angle
+        throwPoint.rotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y, 0.0f);
     }
 }

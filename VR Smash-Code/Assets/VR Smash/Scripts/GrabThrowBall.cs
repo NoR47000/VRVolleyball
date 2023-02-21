@@ -55,6 +55,9 @@ public class GrabThrowBall : MonoBehaviour
 
     private IEnumerator ThrowBallCoroutine()
     {
+        // Set holdingBall to false
+        holdingBall = false;
+
         yield return new WaitForSeconds(throwDelay);
 
         // Release the ball
@@ -62,9 +65,6 @@ public class GrabThrowBall : MonoBehaviour
 
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward *ballRB.mass*throwForce, ForceMode.Impulse);
-
-        // Set holdingBall to false
-        holdingBall = false;
 
     }
 }

@@ -22,6 +22,9 @@ public class GrabThrowBall : MonoBehaviour
     // Is the player holding the ball?
     private bool holdingBall = false;
 
+    // Has the ball been Thrown ?
+    private bool hasBeenThrown =false;
+
     private void Awake()
     {
         ballRB = ball.GetComponent<Rigidbody>();
@@ -43,15 +46,30 @@ public class GrabThrowBall : MonoBehaviour
             holdingBall = true;
         }
 
-        // If the player is holding the ball and the user clicks the mouse button
-        if (holdingBall)
+        // If the player is holding the ball
+        if (holdingBall && !hasBeenThrown)
         {
+            // Orientation of throwPoint
+            ThrowPointOrientation();
+
             StartCoroutine(ThrowBallCoroutine());
+
+            // Set hasBeenThrown to true
+            hasBeenThrown = true;
         }
     }
 
     // The time delay before the ball is thrown
     public float throwDelay = 5.0f;
+
+    // The net's position
+    public Transform net;
+
+    // Net's height
+    private float netHeight = 2.8f;
+
+    // The distance between the player and the net
+    public float netDistance;
 
     private IEnumerator ThrowBallCoroutine()
     {
@@ -59,26 +77,20 @@ public class GrabThrowBall : MonoBehaviour
         holdingBall = false;
 
         yield return new WaitForSeconds(throwDelay);
-
-        // Orientation of throwPoint
-        ThrowPointOrientation();
-
+        
+        // Strength needed for the throw
+        throwForce = StrengthOfThrow();
+        Debug.LogError("throwforce"+throwForce);
+        Debug.LogError("ball mass" + ballRB.mass);
         // Release the ball
         ball.transform.parent = null;
 
         // Apply a force to the ball
-        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward *ballRB.mass*throwForce, ForceMode.Impulse);
+        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce*ballRB.mass, ForceMode.Impulse);
 
     }
 
-    // The net's position
-    public Transform net;
-
-    // Net's height
-    private float netHeight = 2.43f;
-
-    // The distance between the player and the net
-    public float netDistance;
+    
 
     // Adapts the Orientation of the throw to the height of the net
     private void ThrowPointOrientation()
@@ -88,9 +100,23 @@ public class GrabThrowBall : MonoBehaviour
 
         // Calculate the right angle to throw the ball over the net 
         float angle = Mathf.Atan((netHeight-throwPoint.position.y)/netDistance);
-        angle = Mathf.Clamp(angle, 0.0f, Mathf.PI / 2.0f); // Mathf.PI reduces the angle to max 90° otherwise the ball wouldn't^pass the net
+        angle = Mathf.Clamp(angle, 0.0f, Mathf.PI / 2.0f); // Mathf.PI reduces the angle to max 90° otherwise the ball wouldn't pass the net
 
         // Set the throwPoint rotation based on the calculated angle
         throwPoint.rotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y, 0.0f);
+    }
+
+    // Adapts the strength needed to throw the ball over the net
+    private float StrengthOfThrow()
+    {
+        float distanceToNet = Mathf.Abs(throwPoint.position.x - net.transform.position.x); // distance to the net
+
+        float angle = Mathf.Deg2Rad * throwPoint.eulerAngles.x; // angle of the throw in radians
+
+        float requiredVelocity = Mathf.Sqrt((distanceToNet * Physics.gravity.magnitude) / Mathf.Abs(Mathf.Sin(2 * angle) - 2 * netHeight / distanceToNet)); // velocity required to pass the ball over the net
+    
+        float requiredForce = requiredVelocity / Time.fixedDeltaTime; // force required to achieve the necessary velocity
+
+        return requiredForce;
     }
 }

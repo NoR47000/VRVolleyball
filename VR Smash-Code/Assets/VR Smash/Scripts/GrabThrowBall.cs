@@ -66,7 +66,7 @@ public class GrabThrowBall : MonoBehaviour
     public Transform net;
 
     // Net's height
-    private float netHeight = 2.8f;
+    private float netHeight = 2.43f;
 
     // The distance between the player and the net
     public float netDistance;
@@ -86,7 +86,7 @@ public class GrabThrowBall : MonoBehaviour
         ball.transform.parent = null;
 
         // Apply a force to the ball
-        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce*ballRB.mass, ForceMode.Impulse);
+        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce, ForceMode.Impulse);
 
     }
 
@@ -99,8 +99,7 @@ public class GrabThrowBall : MonoBehaviour
         netDistance = transform.position.x - net.position.x;
 
         // Calculate the right angle to throw the ball over the net 
-        float angle = Mathf.Atan((netHeight-throwPoint.position.y)/netDistance);
-        angle = Mathf.Clamp(angle, 0.0f, Mathf.PI / 2.0f); // Mathf.PI reduces the angle to max 90° otherwise the ball wouldn't pass the net
+        float angle = Mathf.Atan(netHeight/netDistance);
 
         // Set the throwPoint rotation based on the calculated angle
         throwPoint.rotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y, 0.0f);
@@ -109,13 +108,13 @@ public class GrabThrowBall : MonoBehaviour
     // Adapts the strength needed to throw the ball over the net
     private float StrengthOfThrow()
     {
-        float distanceToNet = Mathf.Abs(throwPoint.position.x - net.transform.position.x); // distance to the net
-
-        float angle = Mathf.Deg2Rad * throwPoint.eulerAngles.x; // angle of the throw in radians
-
-        float requiredVelocity = Mathf.Sqrt((distanceToNet * Physics.gravity.magnitude) / Mathf.Abs(Mathf.Sin(2 * angle) - 2 * netHeight / distanceToNet)); // velocity required to pass the ball over the net
-    
-        float requiredForce = requiredVelocity / Time.fixedDeltaTime; // force required to achieve the necessary velocity
+        float randomHeight = UnityEngine.Random.Range(0.1f,2.5f); // Generates a random float to have a changing height to go over the net
+        float randomDistance = UnityEngine.Random.Range(0.0f,1.0f); // Generates a random float to have a changing distance from the net
+        float gravityConstant = 9.81f;
+        float h = (netHeight - throwPoint.position.y) + randomHeight;
+        float d =  2*Mathf.Abs(net.position.x-throwPoint.position.x)+randomDistance;// approximation of the Horizontal distance between the starting point and the impact point on the ground 
+        float alpha = Mathf.Atan(2*h / d); // Angle between the trajectory of the ball wanted and the horizon
+        float requiredForce = ballRB.mass * gravityConstant * Mathf.Sin(alpha);
 
         return requiredForce;
     }

@@ -33,6 +33,9 @@ public class GrabThrowBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Orientation of throwPoint
+        ThrowPointOrientation();
+
         if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
         {
             // Set the ball's position and rotation to match the player's throwing point
@@ -49,9 +52,6 @@ public class GrabThrowBall : MonoBehaviour
         // If the player is holding the ball
         if (holdingBall && !hasBeenThrown)
         {
-            // Orientation of throwPoint
-            ThrowPointOrientation();
-
             StartCoroutine(ThrowBallCoroutine());
 
             // Set hasBeenThrown to true

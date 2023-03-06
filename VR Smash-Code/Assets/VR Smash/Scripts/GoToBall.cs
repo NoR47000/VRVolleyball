@@ -20,7 +20,7 @@ public class GoToBall : MonoBehaviour
         ballRB = ball.GetComponent<Rigidbody>();
     }
 
-    public GrabThrowBall grabThrowBall;
+    [HideInInspector] public GrabThrowBall grabThrowBall;
 
     private float grabDistance;
 
@@ -56,13 +56,22 @@ public class GoToBall : MonoBehaviour
     // Move player to the ball
     private void MovePlayer()
     {
-        float distanceToBall = Mathf.Sqrt(Mathf.Pow((ball.transform.position.x-transform.position.x),2)+Mathf.Pow((ball.transform.position.z - transform.position.z),2));
-        if (BallInZone() && grabDistance>=distanceToBall && ballRB.velocity==null)
+
+        Vector3 ballPositionProjected = new Vector3(ball.transform.position.x,0, ball.transform.position.z);
+        Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
+
+        float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);//Mathf.Sqrt(Mathf.Pow((ball.transform.position.x-transform.position.x),2)+Mathf.Pow((ball.transform.position.z - transform.position.z),2));
+        
+        if (BallInZone() && grabDistance>=distanceToBall /*&& ballRB.velocity==null*/)
         {
-            Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position,2.0f);
-            transform.Translate(movePlayer * Time.deltaTime * moveSpeed);
+            Debug.Log("if works");
+            Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position, Time.deltaTime * moveSpeed);
+            //movePlayer = new Vector3(movePlayer.x, 0/*transform.position.y*/, movePlayer.z);
+            transform.position = movePlayer;
+            //transform.Translate(movePlayer * Time.deltaTime * moveSpeed);
         }
     }
+
 
     /*
     private void OnTriggerEnter(Collider other)

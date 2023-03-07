@@ -56,29 +56,23 @@ public class GoToBall : MonoBehaviour
     // Move player to the ball
     private void MovePlayer()
     {
-
+        Debug.Log("MovePlayer");
         Vector3 ballPositionProjected = new Vector3(ball.transform.position.x,0, ball.transform.position.z);
         Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
 
         float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);//Mathf.Sqrt(Mathf.Pow((ball.transform.position.x-transform.position.x),2)+Mathf.Pow((ball.transform.position.z - transform.position.z),2));
         
-        if (BallInZone() && grabDistance>=distanceToBall /*&& ballRB.velocity==null*/)
+        if (BallInZone() && (grabDistance-0.1)<=distanceToBall && ballRB.velocity==new Vector3(0,0,0))
         {
+            
             Debug.Log("if works");
             Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position, Time.deltaTime * moveSpeed);
-            //movePlayer = new Vector3(movePlayer.x, 0/*transform.position.y*/, movePlayer.z);
+            movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
             transform.position = movePlayer;
-            //transform.Translate(movePlayer * Time.deltaTime * moveSpeed);
+        }
+        if ((!grabThrowBall.holdingBall && !BallInZone())/*||(BallInZone() && */)
+        {
+            grabThrowBall.hasBeenThrown = false;
         }
     }
-
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Ball"))
-        {
-            Debug.Log("The ball is in the zone!");
-        }
-    }*/
 }

@@ -20,10 +20,10 @@ public class GrabThrowBall : MonoBehaviour
     public Transform throwPoint;
 
     // Is the player holding the ball?
-    private bool holdingBall = false;
+    public bool holdingBall = false;
 
     // Has the ball been Thrown ?
-    private bool hasBeenThrown =false;
+    public bool hasBeenThrown = false;
 
     private void Awake()
     {
@@ -38,19 +38,16 @@ public class GrabThrowBall : MonoBehaviour
 
         if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
         {
-            // Set the ball's position and rotation to match the player's throwing point
-            ball.transform.position = throwPoint.position;
-            ball.transform.rotation = throwPoint.rotation;
-
-            // Make the ball a child of the player object
-            ball.transform.parent = transform;
+            
+            AttachBall();
 
             // Set holdingBall to true
             holdingBall = true;
+
         }
 
         // If the player is holding the ball
-        if (holdingBall && !hasBeenThrown)
+        if(holdingBall && !hasBeenThrown)
         {
             StartCoroutine(ThrowBallCoroutine());
 
@@ -96,7 +93,7 @@ public class GrabThrowBall : MonoBehaviour
     private void ThrowPointOrientation()
     {
         // Retrieves the distance to the net 
-        netDistance = transform.position.x - net.position.x;
+        netDistance = Mathf.Abs(transform.position.x - net.position.x);
 
         // Calculate the right angle to throw the ball over the net 
         float angle = Mathf.Atan(netHeight/netDistance);
@@ -117,5 +114,15 @@ public class GrabThrowBall : MonoBehaviour
         float requiredForce = ballRB.mass * gravityConstant * Mathf.Sin(alpha);
 
         return requiredForce;
+    }
+
+    private void AttachBall()
+    {
+        // Set the ball's position and rotation to match the player's throwing point
+        ball.transform.position = throwPoint.position;
+        ball.transform.rotation = throwPoint.rotation;
+
+        // Make the ball a child of the player object
+        ball.transform.parent = transform;
     }
 }

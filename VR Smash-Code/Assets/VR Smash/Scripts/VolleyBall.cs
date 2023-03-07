@@ -4,27 +4,18 @@ using UnityEngine;
 
 public class VolleyBall : MonoBehaviour
 {
-    public Transform player;
-    public Rigidbody ball;
+    private GrabThrowBall grabThrowBallScript;
 
-    void Update()
+    private void Start()
     {
-        // Tests if button Fire1 is pressed on controller (configure in Unity parameters)
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Vector3 force = player.forward * 1000f;
-            ball.AddForce(force);
-        }
+        grabThrowBallScript = GetComponent<GrabThrowBall>();
     }
-
     void OnCollisionEnter(Collision collision)
     {
         // Simulates interaction with external world
-        if (collision.gameObject.name == "Ball")
+        if (collision.gameObject.CompareTag("AlliedSide")||collision.gameObject.CompareTag("EnemySide"))
         {
-            Vector3 velocity = ball.velocity;
-            velocity = Vector3.Reflect(velocity, collision.contacts[0].normal);
-            ball.velocity = velocity;
+            grabThrowBallScript.hasBeenThrown = false;
         }
     }
 }

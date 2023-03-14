@@ -23,28 +23,44 @@ public class GrabThrowBall : MonoBehaviour
     public bool holdingBall = false;
 
     // Has the ball been Thrown ?
-    public bool isThrowing = false;
+    [HideInInspector] public bool isThrowing = false;
+
+    // Get ball position in zone
+    public bool ballInZone = false ;
+
+    // Get GoToBall script to get ball zone
+    [HideInInspector] public GoToBall goToBall;
 
     private void Awake()
     {
         ballRB = ball.GetComponent<Rigidbody>();
+        goToBall = GetComponent<GoToBall>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Orientation of throwPoint
-        ThrowPointOrientation();
-
-        if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
+        if (goToBall != null)
         {
-            AttachBall();
-        }
+            // Orientation of throwPoint
+            ThrowPointOrientation();
+            ballInZone = goToBall.BallInZone();
 
-        // If the player is holding the ball
-        if(holdingBall && !isThrowing)
-        {
-            StartCoroutine(ThrowBallCoroutine());
+            if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
+            {
+                AttachBall();
+                // Set holdingBall to true
+                holdingBall = true;
+            }
+
+            // If the player is holding the ball
+            if (holdingBall && !isThrowing && ballInZone)
+            {
+                StartCoroutine(ThrowBallCoroutine());
+
+                // The ball is in the process of being thrown
+                isThrowing = true;
+            }
         }
     }
 
@@ -65,15 +81,11 @@ public class GrabThrowBall : MonoBehaviour
         // Set holdingBall to false
         holdingBall = false;
 
-        // The ball is in the process of being thrown
-        isThrowing = true;
-
         yield return new WaitForSeconds(throwDelay);
         
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
-        Debug.LogError("throwforce"+throwForce);
-        Debug.LogError("ball mass" + ballRB.mass);
+
         // Release the ball
         ball.transform.parent = null;
 
@@ -82,7 +94,6 @@ public class GrabThrowBall : MonoBehaviour
 
         // The ball has been thrown
         isThrowing = false;
-
     }
 
     
@@ -94,10 +105,15 @@ public class GrabThrowBall : MonoBehaviour
         netDistance = Mathf.Abs(transform.position.x - net.position.x);
 
         // Calculate the right angle to throw the ball over the net 
-        float angle = Mathf.Atan(netHeight/netDistance);
+        float zAngle = Mathf.Atan(netHeight/netDistance);
+
+        // Gets the angle needed to point at the net
+        float netDirection = throwPoint.position.z - net.position.z;
+
+        float yAngle = Mathf.Atan(netDistance / netDirection);
 
         // Set the throwPoint rotation based on the calculated angle
-        throwPoint.rotation = Quaternion.Euler(-angle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y, 0.0f);
+        throwPoint.rotation = Quaternion.Euler(-zAngle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y/*-yAngle*Mathf.Rad2Deg*/, 0.0f);
     }
 
     // Adapts the strength needed to throw the ball over the net
@@ -116,6 +132,8 @@ public class GrabThrowBall : MonoBehaviour
 
     private void AttachBall()
     {
+        Debug.Log("Attach");
+        
         // Set the ball's position and rotation to match the player's throwing point
         ball.transform.position = throwPoint.position;
         ball.transform.rotation = throwPoint.rotation;
@@ -123,9 +141,6 @@ public class GrabThrowBall : MonoBehaviour
         // Make the ball a child of the player object
         ball.transform.parent = transform;
 
-        // Need to create a fixed joint
-        //ballRB.velocity = new Vector3(0, 0, 0);
-        // Set holdingBall to true
-        holdingBall = true;
+        
     }
 }

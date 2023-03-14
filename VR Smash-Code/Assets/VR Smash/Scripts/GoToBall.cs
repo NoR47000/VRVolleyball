@@ -20,7 +20,8 @@ public class GoToBall : MonoBehaviour
         ballRB = ball.GetComponent<Rigidbody>();
     }
 
-    [HideInInspector] public GrabThrowBall grabThrowBall;
+    // Get GrabThrowBall script for grabDistance
+    public GrabThrowBall grabThrowBall;
 
     private float grabDistance;
 
@@ -39,7 +40,7 @@ public class GoToBall : MonoBehaviour
         MovePlayer();
     }
 
-    bool BallInZone()
+    public bool BallInZone()
     {
         bool ballInZone = false;
         if (ballRB.position.x >= zone.position.x - zone.localScale.x / 2 &&
@@ -56,16 +57,18 @@ public class GoToBall : MonoBehaviour
     // Move player to the ball
     private void MovePlayer()
     {
-        Debug.Log("MovePlayer");
+        // Get the ball position on the x,z plain
         Vector3 ballPositionProjected = new Vector3(ball.transform.position.x,0, ball.transform.position.z);
+
+        // Get player position in x,z plain
         Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
 
-        float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);//Mathf.Sqrt(Mathf.Pow((ball.transform.position.x-transform.position.x),2)+Mathf.Pow((ball.transform.position.z - transform.position.z),2));
+        // Get distance to ball
+        float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);
         
-        if (BallInZone() && (grabDistance-0.1)<=distanceToBall && ballRB.velocity==new Vector3(0,0,0))
+        if (BallInZone() && (grabDistance-0.1)<=distanceToBall && ballRB.velocity==Vector3.zero)
         {
-            
-            Debug.Log("if works");
+            // Calculate the new position the player will have
             Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position, Time.deltaTime * moveSpeed);
             movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
             transform.position = movePlayer;

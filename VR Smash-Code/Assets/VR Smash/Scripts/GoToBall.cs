@@ -70,9 +70,5 @@ public class GoToBall : MonoBehaviour
             movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
             transform.position = movePlayer;
         }
-        if ((!grabThrowBall.holdingBall && !BallInZone())/*||(BallInZone() && */)
-        {
-            grabThrowBall.hasBeenThrown = false;
-        }
     }
 }

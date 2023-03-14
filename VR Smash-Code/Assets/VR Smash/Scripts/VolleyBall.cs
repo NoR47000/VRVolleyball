@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class VolleyBall : MonoBehaviour
 {
-    private GrabThrowBall grabThrowBallScript;
+    // Movement value under which the ball is stopped
+    public float stopThreshold = 0.1f;
 
-    private void Start()
+    // Height under which the code enters the if
+    private float groundThreshold = 0.5f;
+    private Rigidbody rb;
+
+    void Start()
     {
-        grabThrowBallScript = GetComponent<GrabThrowBall>();
+        rb = GetComponent<Rigidbody>();
     }
-    void OnCollisionEnter(Collision collision)
+
+    void Update()
     {
-        // Simulates interaction with external world
-        if (collision.gameObject.CompareTag("AlliedSide")||collision.gameObject.CompareTag("EnemySide"))
+        //Check if ball is on the ground
+        bool ground = (transform.position.y < groundThreshold);
+
+        if (ground && Quaternion.Angle(transform.rotation, Quaternion.identity) < stopThreshold && rb.velocity.magnitude < stopThreshold)
         {
-            grabThrowBallScript.hasBeenThrown = false;
+            rb.velocity = Vector3.zero;
         }
     }
 }

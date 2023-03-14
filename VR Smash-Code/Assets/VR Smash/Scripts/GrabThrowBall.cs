@@ -23,7 +23,7 @@ public class GrabThrowBall : MonoBehaviour
     public bool holdingBall = false;
 
     // Has the ball been Thrown ?
-    public bool hasBeenThrown = false;
+    public bool isThrowing = false;
 
     private void Awake()
     {
@@ -38,21 +38,13 @@ public class GrabThrowBall : MonoBehaviour
 
         if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
         {
-            
             AttachBall();
-
-            // Set holdingBall to true
-            holdingBall = true;
-
         }
 
         // If the player is holding the ball
-        if(holdingBall && !hasBeenThrown)
+        if(holdingBall && !isThrowing)
         {
             StartCoroutine(ThrowBallCoroutine());
-
-            // Set hasBeenThrown to true
-            hasBeenThrown = true;
         }
     }
 
@@ -73,6 +65,9 @@ public class GrabThrowBall : MonoBehaviour
         // Set holdingBall to false
         holdingBall = false;
 
+        // The ball is in the process of being thrown
+        isThrowing = true;
+
         yield return new WaitForSeconds(throwDelay);
         
         // Strength needed for the throw
@@ -84,6 +79,9 @@ public class GrabThrowBall : MonoBehaviour
 
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce, ForceMode.Impulse);
+
+        // The ball has been thrown
+        isThrowing = false;
 
     }
 
@@ -124,5 +122,10 @@ public class GrabThrowBall : MonoBehaviour
 
         // Make the ball a child of the player object
         ball.transform.parent = transform;
+
+        // Need to create a fixed joint
+        //ballRB.velocity = new Vector3(0, 0, 0);
+        // Set holdingBall to true
+        holdingBall = true;
     }
 }

@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 5350942542097118139}
   - component: {fileID: 2025748820024012336}
   - component: {fileID: 1906318807275059193}
-  - component: {fileID: 8371091690034419052}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,23 +112,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
---- !u!138 &8371091690034419052
-FixedJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886259388321080251}
-  m_ConnectedBody: {fileID: 3744659440165626751}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1 &1496333949986097206
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3315840219059854174}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ThrowPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,8 +158,9 @@ GameObject:
   - component: {fileID: 6407505913755957957}
   - component: {fileID: 7824490405702246258}
   - component: {fileID: 3744659440165626751}
-  m_Layer: 3
-  m_Name: Cylinder
+  - component: {fileID: 6473608252903498843}
+  m_Layer: 0
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,8 +259,23 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!138 &6473608252903498843
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276224290910396903}
+  m_ConnectedBody: {fileID: 1906318807275059193}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &5450979494073288478
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 5022011299778598700}
   - component: {fileID: 8395608075648698830}
   - component: {fileID: 5112318443989975295}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: BotEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   grabDistance: 1.2
-  throwForce: 1
+  throwForce: 10
   throwPoint: {fileID: 3315840219059854174}
   holdingBall: 0
   isThrowing: 0

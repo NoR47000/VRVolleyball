@@ -37,6 +37,7 @@ public class GrabThrowBall : MonoBehaviour
         goToBall = GetComponent<GoToBall>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -46,20 +47,13 @@ public class GrabThrowBall : MonoBehaviour
             ThrowPointOrientation();
             ballInZone = goToBall.BallInZone();
 
-            if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
-            {
-                AttachBall();
-                // Set holdingBall to true
-                holdingBall = true;
-            }
+            AttachBall();
 
             // If the player is holding the ball
             if (holdingBall && !isThrowing && ballInZone)
             {
+                Debug.Log("coroutine call");
                 StartCoroutine(ThrowBallCoroutine());
-
-                // The ball is in the process of being thrown
-                isThrowing = true;
             }
         }
     }
@@ -81,6 +75,9 @@ public class GrabThrowBall : MonoBehaviour
         // Set holdingBall to false
         holdingBall = false;
 
+        // The ball is in the process of being thrown
+        isThrowing = true;
+
         yield return new WaitForSeconds(throwDelay);
         
         // Strength needed for the throw
@@ -92,6 +89,10 @@ public class GrabThrowBall : MonoBehaviour
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce, ForceMode.Impulse);
 
+        // Time for the bot to be able to do a new throw
+        float newThrowDelay = 2.0f;
+
+        yield return new WaitForSeconds(newThrowDelay);
         // The ball has been thrown
         isThrowing = false;
     }
@@ -132,15 +133,18 @@ public class GrabThrowBall : MonoBehaviour
 
     private void AttachBall()
     {
-        Debug.Log("Attach");
-        
-        // Set the ball's position and rotation to match the player's throwing point
-        ball.transform.position = throwPoint.position;
-        ball.transform.rotation = throwPoint.rotation;
+        if (!holdingBall && ballRB.velocity.magnitude <= 0 && Vector3.Distance(ball.transform.position, transform.position) <= grabDistance)
+        {
+            // Set holdingBall to true
+            holdingBall = true;
 
-        // Make the ball a child of the player object
-        ball.transform.parent = transform;
+            Debug.Log("Attach");
+            // Set the ball's position and rotation to match the player's throwing point
+            ball.transform.position = throwPoint.position;
+            ball.transform.rotation = throwPoint.rotation;
 
-        
+            // Make the ball a child of the player object
+            ball.transform.parent = transform;
+        }
     }
 }

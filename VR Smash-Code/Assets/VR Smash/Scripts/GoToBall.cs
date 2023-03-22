@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class GoToBall : MonoBehaviour
 {
@@ -15,29 +11,31 @@ public class GoToBall : MonoBehaviour
     // The player's zone
     public Transform zone;
 
-    private void Awake()
-    {
-        ballRB = ball.GetComponent<Rigidbody>();
-    }
-
     // Get GrabThrowBall script for grabDistance
-    public GrabThrowBall grabThrowBall;
+    public GrabBall grabBall;
 
     private float grabDistance;
 
     // Player's Move speed
-    private float moveSpeed=10.0f;
+    private float moveSpeed = 10.0f;
 
-    private void Start()
+    // VolleyBall script
+    [HideInInspector] public VolleyBall volleyBall;
+
+    private void Awake()
     {
-        grabThrowBall = GetComponent<GrabThrowBall>();
-        grabDistance = grabThrowBall.grabDistance;
+        ballRB = ball.GetComponent<Rigidbody>();
+        volleyBall = GetComponent<VolleyBall>();
+        grabBall = GetComponent<GrabBall>();
+        grabDistance = grabBall.grabDistance;
     }
 
+
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        MovePlayer();
+        //MovePlayer();
     }
 
     public bool BallInZone()
@@ -55,21 +53,62 @@ public class GoToBall : MonoBehaviour
     }
 
     // Move player to the ball
-    private void MovePlayer()
+    public void MovePlayer()
     {
         // Get the ball position on the x,z plain
-        Vector3 ballPositionProjected = new Vector3(ball.transform.position.x,0, ball.transform.position.z);
+        Vector3 ballPositionProjected = new Vector3(ball.transform.position.x, 0, ball.transform.position.z);
 
         // Get player position in x,z plain
         Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
 
         // Get distance to ball
         float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);
-        
-        if (BallInZone() && (grabDistance-0.1)<=distanceToBall && ballRB.velocity==Vector3.zero)
+
+        if (BallInZone() && grabDistance <= (distanceToBall + 0.1) && ballRB.velocity == Vector3.zero)
         {
             // Calculate the new position the player will have
             Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position, Time.deltaTime * moveSpeed);
+            movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
+            transform.position = movePlayer;
+        }
+    }
+
+    // Moves the bot when the ball is stopped on the ground
+    public void MoveBotBallStopped()
+    {
+        // Get the ball position on the x,z plain
+        Vector3 ballPositionProjected = new Vector3(ball.transform.position.x, 0, ball.transform.position.z);
+
+        // Get player position in x,z plain
+        Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
+
+        // Get distance to ball
+        float distanceToBall = Vector3.Distance(ballPositionProjected, positionProjected);
+
+        if (BallInZone() && grabDistance <= (distanceToBall + 0.1))
+        {
+            // Calculate the new position the player will have
+            Vector3 movePlayer = Vector3.MoveTowards(transform.position, ball.transform.position, Time.deltaTime * moveSpeed);
+            movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
+            transform.position = movePlayer;
+        }
+    }
+
+    // Moves the bot when the ball is in the air
+    public void MoveBotBallInAir()
+    {
+        Vector3 ballLandingPoint = volleyBall.BallLandingPoint();
+
+        // Get player position in x,z plain
+        Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);
+
+        // Get distance to ball
+        float distanceToBall = Vector3.Distance(ballLandingPoint, positionProjected);
+
+        if (grabDistance <= (distanceToBall + 0.1))
+        {
+            // Calculate the new position the player will have
+            Vector3 movePlayer = Vector3.MoveTowards(transform.position, ballLandingPoint, Time.deltaTime * moveSpeed);
             movePlayer = new Vector3(movePlayer.x, transform.position.y, movePlayer.z);
             transform.position = movePlayer;
         }

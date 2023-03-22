@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrabThrowBall : MonoBehaviour
@@ -26,10 +25,13 @@ public class GrabThrowBall : MonoBehaviour
     [HideInInspector] public bool isThrowing = false;
 
     // Get ball position in zone
-    public bool ballInZone = false ;
+    public bool ballInZone = false;
 
     // Get GoToBall script to get ball zone
     [HideInInspector] public GoToBall goToBall;
+
+    // Gets update time 
+    private float oldTime = 0;
 
     private void Awake()
     {
@@ -40,8 +42,9 @@ public class GrabThrowBall : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (goToBall != null)
+    {/*
+        float diff =Time.time - oldTime;
+        if (goToBall != null && diff == Time.time)
         {
             // Orientation of throwPoint
             ThrowPointOrientation();
@@ -55,6 +58,33 @@ public class GrabThrowBall : MonoBehaviour
                 Debug.Log("coroutine call");
                 StartCoroutine(ThrowBallCoroutine());
             }
+        }
+        else
+        {
+            oldTime = Time.time;
+        }*/
+    }
+    private void FixedUpdate()
+    {
+        float diff = Time.time - oldTime;
+        if (goToBall != null && diff == Time.time)
+        {
+            // Orientation of throwPoint
+            ThrowPointOrientation();
+            ballInZone = goToBall.BallInZone();
+
+            AttachBall();
+
+            // If the player is holding the ball
+            if (holdingBall && !isThrowing && ballInZone)
+            {
+                Debug.Log("coroutine call");
+                StartCoroutine(ThrowBallCoroutine());
+            }
+        }
+        else
+        {
+            oldTime = Time.time;
         }
     }
 
@@ -79,7 +109,7 @@ public class GrabThrowBall : MonoBehaviour
         isThrowing = true;
 
         yield return new WaitForSeconds(throwDelay);
-        
+
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
 
@@ -87,7 +117,7 @@ public class GrabThrowBall : MonoBehaviour
         ball.transform.parent = null;
 
         // Apply a force to the ball
-        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward*throwForce, ForceMode.Impulse);
+        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
 
         // Time for the bot to be able to do a new throw
         float newThrowDelay = 2.0f;
@@ -95,9 +125,12 @@ public class GrabThrowBall : MonoBehaviour
         yield return new WaitForSeconds(newThrowDelay);
         // The ball has been thrown
         isThrowing = false;
+
+        // Set OldTime back to zero so ball can be thrown again
+        oldTime = 0;
     }
 
-    
+
 
     // Adapts the Orientation of the throw to the height of the net
     private void ThrowPointOrientation()
@@ -106,7 +139,7 @@ public class GrabThrowBall : MonoBehaviour
         netDistance = Mathf.Abs(transform.position.x - net.position.x);
 
         // Calculate the right angle to throw the ball over the net 
-        float zAngle = Mathf.Atan(netHeight/netDistance);
+        float zAngle = Mathf.Atan(netHeight / netDistance);
 
         // Gets the angle needed to point at the net
         float netDirection = throwPoint.position.z - net.position.z;
@@ -120,12 +153,12 @@ public class GrabThrowBall : MonoBehaviour
     // Adapts the strength needed to throw the ball over the net
     private float StrengthOfThrow()
     {
-        float randomHeight = UnityEngine.Random.Range(0.1f,2.5f); // Generates a random float to have a changing height to go over the net
-        float randomDistance = UnityEngine.Random.Range(0.0f,1.0f); // Generates a random float to have a changing distance from the net
+        float randomHeight = UnityEngine.Random.Range(0.1f, 2.5f); // Generates a random float to have a changing height to go over the net
+        float randomDistance = UnityEngine.Random.Range(0.0f, 1.0f); // Generates a random float to have a changing distance from the net
         float gravityConstant = 9.81f;
         float h = (netHeight - throwPoint.position.y) + randomHeight;
-        float d =  2*Mathf.Abs(net.position.x-throwPoint.position.x)+randomDistance;// approximation of the Horizontal distance between the starting point and the impact point on the ground 
-        float alpha = Mathf.Atan(2*h / d); // Angle between the trajectory of the ball wanted and the horizon
+        float d = 2 * Mathf.Abs(net.position.x - throwPoint.position.x)/*+randomDistance*/;// approximation of the Horizontal distance between the starting point and the impact point on the ground 
+        float alpha = Mathf.Atan(2 * h / d); // Angle between the trajectory of the ball wanted and the horizon
         float requiredForce = ballRB.mass * gravityConstant * Mathf.Sin(alpha);
 
         return requiredForce;

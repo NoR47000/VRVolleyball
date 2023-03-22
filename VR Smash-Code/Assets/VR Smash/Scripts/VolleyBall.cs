@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VolleyBall : MonoBehaviour
@@ -16,7 +14,7 @@ public class VolleyBall : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Check if ball is on the ground
         bool ground = (transform.position.y < groundThreshold);
@@ -30,12 +28,39 @@ public class VolleyBall : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collider other)
-    //{
-    //    if(other.gameObject.CompareTag("EnemySide")|| other.gameObject.CompareTag("AlliedSide"))
-    //    {
-    //        rb.velocity = Vector3.zero;
-    //        rb.angularVelocity = Vector3.zero;
-    //    }
-    //}
+
+    public Vector3 BallLandingPoint()
+    {
+        Vector3 landingPoint = new Vector3(0, 0, 0);
+
+        // Ball speed
+        Vector3 velocity = rb.velocity;
+        float v0 = Mathf.Sqrt((velocity.x) * (velocity.x) + (velocity.y) * (velocity.y) + (velocity.z) * (velocity.z));
+
+        // Angle at which it is thrown
+        float alpha = Vector3.Angle(velocity, new Vector3(1, 0, 0));
+
+        // Ball position
+        float x0 = rb.position.x;
+        float y0 = rb.position.y;
+        float z0 = rb.position.z;
+
+        // Necessary variable
+        float g = Physics.gravity.y;
+
+        // Calculus to resolve 0 = A*x^2 + B*x + C
+        float A = -g / (2 * Mathf.Cos(alpha) * v0 * v0);
+        float B = -2 * x0 * A + Mathf.Tan(alpha);
+        float C = A * x0 * x0 - Mathf.Tan(alpha) * x0 + y0;
+
+        // Roots of the equation
+        if (A * C > 0)
+        {
+            landingPoint.x = (-B + Mathf.Sqrt(4 * A * C)) / (2 * A);
+        }
+        landingPoint.y = 0;
+        landingPoint.z = z0;
+
+        return landingPoint;
+    }
 }

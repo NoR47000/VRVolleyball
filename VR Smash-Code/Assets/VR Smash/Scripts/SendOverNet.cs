@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class SendOverNet : MonoBehaviour
 {
-    // The ball object
-    public GameObject ball;
+    //Ball GameObject
+    private GameObject ball;
 
     //get ball rigidbody
     private Rigidbody ballRB;
 
     // The player's throwing point
-    public Transform throwPoint;
+    private Transform throwPoint;
     // The net's position
     public Transform net;
 
@@ -21,16 +21,16 @@ public class SendOverNet : MonoBehaviour
     // The force to apply to the ball when it's thrown
     public float throwForce = 10.0f;
 
+    // GetBall script to get ball GameObject
+    [HideInInspector] public GetBallScript getBallScript;
+
     // Awake is only called once at the beginning
     private void Awake()
     {
-        ballRB = ball.GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        getBallScript = GetComponent<GetBallScript>();
+        ball = getBallScript.ball;
+        ballRB = getBallScript.ballRB;
+        throwPoint = transform.Find("ThrowPoint");
     }
 
     public void SendOver()
@@ -38,7 +38,7 @@ public class SendOverNet : MonoBehaviour
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
         // Apply a force to the ball
-        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
+        ball.GetComponent<Rigidbody>().AddForce(throwPoint.up * throwForce, ForceMode.Impulse);
     }
 
     // Adapts the Orientation of the throw to the height of the net
@@ -58,8 +58,8 @@ public class SendOverNet : MonoBehaviour
     {
         float randomHeight = Random.Range(0.1f, 2.5f); // Generates a random float to have a changing height to go over the net
         float gravityConstant = Physics.gravity.y;
-        float h = (netHeight - throwPoint.position.y) + randomHeight;
-        float d = 2 * Mathf.Abs(net.position.x - throwPoint.position.x);// approximation of the Horizontal distance between the starting point and the impact point on the ground 
+        float h = (netHeight - throwPoint.position.y) + randomHeight; // Height required to pass net
+        float d = 2 * Mathf.Abs(net.position.x - throwPoint.position.x);// Approximation of the Horizontal distance between the starting point and the impact point on the ground 
         float alpha = Mathf.Atan(2 * h / d); // Angle between the trajectory of the ball wanted and the horizon
         float requiredForce = ballRB.mass * gravityConstant * Mathf.Sin(alpha);
 

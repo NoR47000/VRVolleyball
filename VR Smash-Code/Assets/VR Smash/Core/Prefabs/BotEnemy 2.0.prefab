@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 6390860859348514470}
   - component: {fileID: 2337050034398884093}
   - component: {fileID: 2159254887082863807}
+  - component: {fileID: -2714239492540902101}
   m_Layer: 0
   m_Name: BotEnemy 2.0
   m_TagString: Untagged
@@ -344,10 +345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6c2e7870942d64ba5e0fb7a64996ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
   ally: {fileID: 0}
   zone: {fileID: 0}
   nbOfTouch: 0
+  getBallScript: {fileID: 0}
   goToBall: {fileID: 0}
   volleyBall: {fileID: 0}
   bumpBall: {fileID: 0}
@@ -366,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  getBallScript: {fileID: 0}
 --- !u!114 &6390860859348514470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +384,7 @@ MonoBehaviour:
   zone: {fileID: 0}
   grabBall: {fileID: 0}
   volleyBall: {fileID: 0}
+  getBallScript: {fileID: 0}
 --- !u!114 &2337050034398884093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,11 +397,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8ae58813a11954597de32578f7a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  throwPoint: {fileID: 0}
   net: {fileID: 0}
   netDistance: 0
   throwForce: 10
+  getBallScript: {fileID: 0}
 --- !u!114 &2159254887082863807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +413,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ae409c67a07864881973f44366c7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
   grabDistance: 1
   throwPoint: {fileID: 0}
   holdingBall: 0
+  getBallScript: {fileID: 0}
+--- !u!114 &-2714239492540902101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5450979494073288478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02312ae229bb5c248b04dc82bee6fb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  ballRB: {fileID: 0}

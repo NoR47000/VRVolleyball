@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
-    // The ball object
-    public GameObject ball;
+    //Ball GameObject
+    private GameObject ball;
 
     // The Bot's ally
     public GameObject ally;
@@ -22,8 +22,15 @@ public class Bot : MonoBehaviour
 
     // nb of touches in friendly rally
     public int nbOfTouch = 0;
+    // Throw ball after delay
+    private float delay = 0f;
+    // DelayLimit
+    private float delayLimit = 4f;
+
 
     // All Scripts called
+    // GetBall script
+    [HideInInspector] public GetBallScript getBallScript;
     // GoToBall script
     [HideInInspector] public GoToBall goToBall;
     // VolleyBall script
@@ -36,62 +43,99 @@ public class Bot : MonoBehaviour
     [HideInInspector] public SendOverNet sendOverNet;
 
 
+
     // Awake is only called once
     private void Awake()
     {
         // Get Components
         botRB = GetComponent<Rigidbody>();
-        ballRB = ball.GetComponent<Rigidbody>();
+        getBallScript = GetComponent<GetBallScript>();
         allyRB = ally.GetComponent<Rigidbody>();
         goToBall = GetComponent<GoToBall>();
-        volleyBall = GetComponent<VolleyBall>();
         bumpBall = GetComponent<BumpBall>();
         grabBall = GetComponent<GrabBall>();
         sendOverNet = GetComponent<SendOverNet>();
+
+        ball = getBallScript.ball;
+        ballRB = getBallScript.ballRB;
+        volleyBall = ball.GetComponent<VolleyBall>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        sendOverNet.ThrowPointOrientation();
     }
     private void FixedUpdate()
     {
-
+        ManageBot();
     }
 
     private void ManageBot()
     {
-        // Ball in bot's zone and on ground
-        if (BallOnGround() && BallStopped() && goToBall.BallInZone())
+        if (BallStopped() && goToBall.BallInZone())
         {
-            goToBall.MoveBotBallStopped();
-            grabBall.AttachBall();
-            sendOverNet.ThrowPointOrientation();
-            grabBall.ReleaseBall();
-            sendOverNet.SendOver();
-        }
-        // Ball in air, creating exchange
-        if (!BallOnGround() && LandingPointInZone())
-        {
-            if (nbOfTouch == 0 && nbOfTouch == 1)
+            Debug.Log(IAmCloser());
+            // Grabs the ball and orients the throwPoint
+            if (BallTouchGround() && IAmCloser())
             {
-                if (IAmCloser())
+                goToBall.MoveBotBallStopped();
+                grabBall.AttachBall();
+            }
+            else
+            {
+                if (delay > delayLimit)
                 {
-                    goToBall.MoveBotBallInAir();
-                    bumpBall.BumpToAlly();
+                    grabBall.ReleaseBall();
+                    sendOverNet.SendOver();
+                    delay = 0;
+                }
+                else
+                {
+                    delay += Time.deltaTime;
+                    Debug.Log(delay);
+                    return;
                 }
             }
-            if (nbOfTouch == 2)
-            {
-                //Attack()
-                sendOverNet.SendOver();
-            }
         }
+
+
+        //if (grabBall.holdingBall && delay < delayLimit)
+        //{
+        //    delay += Time.deltaTime;
+        //    return;
+        //}
+        //// Ball in bot's zone and on ground
+        //if (BallOnGround() && BallStopped() && goToBall.BallInZone())
+        //{
+        //    goToBall.MoveBotBallStopped();
+        //    grabBall.AttachBall();
+        //    sendOverNet.ThrowPointOrientation();
+        //    Thread.Sleep(3000);
+        //    grabBall.ReleaseBall();
+        //    sendOverNet.SendOver();
+        //}
+        //// Ball in air, creating exchange
+        //if (!BallOnGround() && LandingPointInZone())
+        //{
+        //    if (nbOfTouch == 0 && nbOfTouch == 1)
+        //    {
+        //        if (IAmCloser())
+        //        {
+        //            goToBall.MoveBotBallInAir();
+        //            bumpBall.BumpToAlly();
+        //        }
+        //    }
+        //    if (nbOfTouch == 2)
+        //    {
+        //        //Attack()
+        //        sendOverNet.SendOver();
+        //    }
+        //}
     }
 
 
-    private bool BallOnGround()
+    private bool BallTouchGround()
     {
         float ballSize = ball.transform.localScale.y;
         if (ballRB.position.y <= ballSize)
@@ -99,9 +143,10 @@ public class Bot : MonoBehaviour
         return false;
     }
 
+    // Test if ball is stopped
     private bool BallStopped()
     {
-        if (ballRB.velocity.y <= 0.1)
+        if (ballRB.velocity.magnitude < 0.01)
             return true;
         return false;
     }
@@ -117,9 +162,12 @@ public class Bot : MonoBehaviour
     // Test to see who is closer to the ball landing point
     private bool IAmCloser()
     {
+        Vector3 landingPoint = volleyBall.BallLandingPoint();
         // Landing Point position
-        float x = volleyBall.BallLandingPoint().x;
-        float z = volleyBall.BallLandingPoint().z;
+        float x = landingPoint.x;
+        float z = landingPoint.z;
+
+
         // Bot position
         float botX = botRB.position.x;
         float botZ = botRB.position.z;
@@ -127,9 +175,12 @@ public class Bot : MonoBehaviour
         float allyX = allyRB.position.x;
         float allyZ = allyRB.position.z;
 
+
         // Distances to Landing Point
-        float allyDistanceToLandingPoint = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(allyX - x), 2) + Mathf.Pow(Mathf.Abs(allyZ - z), 2));
-        float botDistanceToLandingPoint = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(botX - x), 2) + Mathf.Pow(Mathf.Abs(botZ - z), 2));
+        double allyDistanceToLandingPoint = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(allyX - x), 2) + Mathf.Pow(Mathf.Abs(allyZ - z), 2));
+        Debug.Log("ally distance" + allyDistanceToLandingPoint);
+        double botDistanceToLandingPoint = Mathf.Sqrt((botX - x) * (botX - x) + (botZ - z) * (botZ - z));
+        Debug.Log("bot distance" + botDistanceToLandingPoint);
 
         if (botDistanceToLandingPoint <= allyDistanceToLandingPoint)
             return true;

@@ -159,6 +159,8 @@ GameObject:
   - component: {fileID: 4404588591026002157}
   - component: {fileID: 630131726690844566}
   - component: {fileID: 4571010497036212836}
+  - component: {fileID: 5762141017000484167}
+  - component: {fileID: 7943363779514669165}
   m_Layer: 0
   m_Name: BotFriend 2.0
   m_TagString: Untagged
@@ -212,10 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6c2e7870942d64ba5e0fb7a64996ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
   ally: {fileID: 0}
   zone: {fileID: 0}
   nbOfTouch: 0
+  getBallScript: {fileID: 0}
   goToBall: {fileID: 0}
   volleyBall: {fileID: 0}
   bumpBall: {fileID: 0}
@@ -234,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  getBallScript: {fileID: 0}
 --- !u!114 &630131726690844566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +253,7 @@ MonoBehaviour:
   zone: {fileID: 0}
   grabBall: {fileID: 0}
   volleyBall: {fileID: 0}
+  getBallScript: {fileID: 0}
 --- !u!114 &4571010497036212836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,11 +266,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8ae58813a11954597de32578f7a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  throwPoint: {fileID: 0}
   net: {fileID: 0}
   netDistance: 0
   throwForce: 10
+  getBallScript: {fileID: 0}
+--- !u!114 &5762141017000484167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8822556994557170596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ae409c67a07864881973f44366c7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabDistance: 1
+  throwPoint: {fileID: 0}
+  holdingBall: 0
+  getBallScript: {fileID: 0}
+--- !u!114 &7943363779514669165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8822556994557170596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02312ae229bb5c248b04dc82bee6fb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  ballRB: {fileID: 0}
 --- !u!1 &8822556995074778823
 GameObject:
   m_ObjectHideFlags: 0

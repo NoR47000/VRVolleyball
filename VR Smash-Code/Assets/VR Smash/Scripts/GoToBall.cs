@@ -3,7 +3,7 @@ using UnityEngine;
 public class GoToBall : MonoBehaviour
 {
     // The ball object
-    public GameObject ball;
+    private GameObject ball;
 
     // Ball RigidBody
     private Rigidbody ballRB;
@@ -21,10 +21,15 @@ public class GoToBall : MonoBehaviour
 
     // VolleyBall script
     [HideInInspector] public VolleyBall volleyBall;
+    // GetBall script to get ball GameObject
+    [HideInInspector] public GetBallScript getBallScript;
 
     private void Awake()
     {
-        ballRB = ball.GetComponent<Rigidbody>();
+        getBallScript = GetComponent<GetBallScript>();
+
+        ball = getBallScript.ball;
+        ballRB = getBallScript.ballRB;
         volleyBall = GetComponent<VolleyBall>();
         grabBall = GetComponent<GrabBall>();
         grabDistance = grabBall.grabDistance;

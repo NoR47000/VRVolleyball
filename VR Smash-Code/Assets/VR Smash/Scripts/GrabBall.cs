@@ -3,7 +3,7 @@ using UnityEngine;
 public class GrabBall : MonoBehaviour
 {
     // The ball object
-    public GameObject ball;
+    private GameObject ball;
 
     // The player's grab distance
     public float grabDistance = 1.0f;
@@ -17,10 +17,16 @@ public class GrabBall : MonoBehaviour
     // Is the player holding the ball?
     public bool holdingBall = false;
 
+    // GetBall script to get ball GameObject
+    [HideInInspector] public GetBallScript getBallScript;
+
 
     private void Awake()
     {
-        ballRB = ball.GetComponent<Rigidbody>();
+        getBallScript = GetComponent<GetBallScript>();
+
+        ball = getBallScript.ball;
+        ballRB = getBallScript.ballRB;
     }
     public void AttachBall()
     {
@@ -43,5 +49,6 @@ public class GrabBall : MonoBehaviour
     {
         // Release the ball
         ball.transform.parent = null;
+        holdingBall = false;
     }
 }

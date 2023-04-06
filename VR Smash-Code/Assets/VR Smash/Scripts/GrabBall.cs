@@ -17,6 +17,9 @@ public class GrabBall : MonoBehaviour
     // Is the player holding the ball?
     public bool holdingBall = false;
 
+    //Fixed Joint
+    public FixedJoint fixedJoint;
+
     // GetBall script to get ball GameObject
     [HideInInspector] public GetBallScript getBallScript;
 
@@ -41,14 +44,21 @@ public class GrabBall : MonoBehaviour
             ball.transform.rotation = throwPoint.rotation;
 
             // Make the ball a child of the player object
-            ball.transform.parent = transform;
+            ball.transform.parent = throwPoint.transform;
+
+            // Add a Fixed Joint component to the ball and connect it to the throw point
+            fixedJoint = ball.AddComponent<FixedJoint>();
+            fixedJoint.connectedBody = throwPoint.GetComponent<Rigidbody>();
         }
     }
 
     public void ReleaseBall()
     {
+
         // Release the ball
         ball.transform.parent = null;
         holdingBall = false;
+        // Remove the Fixed Joint component from the ball
+        Destroy(fixedJoint);
     }
 }

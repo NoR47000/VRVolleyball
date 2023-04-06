@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: zone
       value: 
       objectReference: {fileID: 1449033259}
+    - target: {fileID: 3405330861181653532, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 4404588591026002157, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: ball
       value: 
@@ -806,6 +810,10 @@ PrefabInstance:
       propertyPath: ball
       value: 
       objectReference: {fileID: 247080453}
+    - target: {fileID: 8395608075648698830, guid: 8324db68367493c4986634108fe26d28, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8324db68367493c4986634108fe26d28, type: 3}
 --- !u!4 &1940336982 stripped
@@ -897,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.468
+      value: -1.81
       objectReference: {fileID: 0}
     - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
       propertyPath: m_LocalPosition.y

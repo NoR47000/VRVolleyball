@@ -75,7 +75,6 @@ public class Bot : MonoBehaviour
     {
         if (BallStopped() && goToBall.BallInZone())
         {
-            Debug.Log(IAmCloser());
             // Grabs the ball and orients the throwPoint
             if (BallTouchGround() && IAmCloser())
             {
@@ -93,7 +92,6 @@ public class Bot : MonoBehaviour
                 else
                 {
                     delay += Time.deltaTime;
-                    Debug.Log(delay);
                     return;
                 }
             }
@@ -178,9 +176,7 @@ public class Bot : MonoBehaviour
 
         // Distances to Landing Point
         double allyDistanceToLandingPoint = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(allyX - x), 2) + Mathf.Pow(Mathf.Abs(allyZ - z), 2));
-        Debug.Log("ally distance" + allyDistanceToLandingPoint);
         double botDistanceToLandingPoint = Mathf.Sqrt((botX - x) * (botX - x) + (botZ - z) * (botZ - z));
-        Debug.Log("bot distance" + botDistanceToLandingPoint);
 
         if (botDistanceToLandingPoint <= allyDistanceToLandingPoint)
             return true;

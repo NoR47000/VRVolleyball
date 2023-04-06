@@ -39,7 +39,7 @@ public class VolleyBall : MonoBehaviour
         float x0 = rb.position.x;
         float y0 = rb.position.y;
         float z0 = rb.position.z;
-        Debug.Log("velocity" + velocity);
+
         if (velocity.magnitude <= 0)
         {
             landingPoint.x = x0;
@@ -47,7 +47,6 @@ public class VolleyBall : MonoBehaviour
         else
         {
             float v0 = Mathf.Sqrt((velocity.x) * (velocity.x) + (velocity.y) * (velocity.y) + (velocity.z) * (velocity.z));
-            Debug.Log(v0);
 
             // Angle at which it is thrown
             float alpha = Vector3.Angle(velocity, new Vector3(1, 0, 0));
@@ -69,7 +68,6 @@ public class VolleyBall : MonoBehaviour
 
         landingPoint.y = 0;
         landingPoint.z = z0;
-        Debug.Log("landing point" + landingPoint);
 
         return landingPoint;
     }

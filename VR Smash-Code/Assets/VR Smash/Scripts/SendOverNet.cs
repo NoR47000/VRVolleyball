@@ -37,8 +37,9 @@ public class SendOverNet : MonoBehaviour
     {
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
+
         // Apply a force to the ball
-        ball.GetComponent<Rigidbody>().AddForce(throwPoint.up * throwForce, ForceMode.Impulse);
+        ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
     }
 
     // Adapts the Orientation of the throw to the height of the net
@@ -50,6 +51,7 @@ public class SendOverNet : MonoBehaviour
         // Calculate the right angle to throw the ball over the net 
         float zAngle = Mathf.Atan(netHeight / netDistance);
 
+
         // Set the throwPoint rotation based on the calculated angle
         throwPoint.rotation = Quaternion.Euler(-zAngle * Mathf.Rad2Deg, transform.rotation.eulerAngles.y, 0.0f);
     }
@@ -57,7 +59,7 @@ public class SendOverNet : MonoBehaviour
     private float StrengthOfThrow()
     {
         float randomHeight = Random.Range(0.1f, 2.5f); // Generates a random float to have a changing height to go over the net
-        float gravityConstant = Physics.gravity.y;
+        float gravityConstant = 9.81f;
         float h = (netHeight - throwPoint.position.y) + randomHeight; // Height required to pass net
         float d = 2 * Mathf.Abs(net.position.x - throwPoint.position.x);// Approximation of the Horizontal distance between the starting point and the impact point on the ground 
         float alpha = Mathf.Atan(2 * h / d); // Angle between the trajectory of the ball wanted and the horizon

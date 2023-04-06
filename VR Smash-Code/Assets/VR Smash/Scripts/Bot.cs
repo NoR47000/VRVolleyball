@@ -96,6 +96,20 @@ public class Bot : MonoBehaviour
                 }
             }
         }
+        else if (!BallTouchGround() && LandingPointInZone())
+        {
+            Debug.Log("nb of touches" + nbOfTouch);
+            if (nbOfTouch == 0 || nbOfTouch == 1)
+            {
+                Debug.Log("Ball>No Touch");
+                if (IAmCloser())
+                {
+                    Debug.Log("MoveBiatchx");
+                    goToBall.MoveBotBallInAir();
+                    //bumpBall.BumpToAlly();
+                }
+            }
+        }
 
 
         //if (grabBall.holdingBall && delay < delayLimit)

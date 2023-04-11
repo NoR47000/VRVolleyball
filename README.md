@@ -10,3 +10,5 @@ Install Universal RP
 Window> rendering> pipeline converter
 
 add shadder for transparency and change alpha for transparency
+
+Go to File >Build settings > player settings > XR-plugin Managment and add Open VR Loader

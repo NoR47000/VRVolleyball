@@ -18,7 +18,8 @@
     },
     {
       "name": "/actions/default/in/Pose",
-      "type": "pose"
+      "type": "pose",
+      "requirement": "suggested"
     },
     {
       "name": "/actions/default/in/SkeletonLeftHand",

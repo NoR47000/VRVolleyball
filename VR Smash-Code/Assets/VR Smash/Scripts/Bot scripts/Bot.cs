@@ -73,6 +73,7 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
+        
         if (BallStopped() && goToBall.BallInZone())
         {
             // Grabs the ball and orients the throwPoint
@@ -83,6 +84,7 @@ public class Bot : MonoBehaviour
             }
             else
             {
+                Debug.Log(delay);
                 if (delay > delayLimit)
                 {
                     grabBall.ReleaseBall();

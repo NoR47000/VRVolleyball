@@ -12,7 +12,7 @@ public class GrabBall : MonoBehaviour
     private Rigidbody ballRB;
 
     // The player's throwing point
-    public Transform throwPoint;
+    private Transform throwPoint;
 
     // Is the player holding the ball?
     public bool holdingBall = false;
@@ -27,7 +27,7 @@ public class GrabBall : MonoBehaviour
     private void Awake()
     {
         getBallScript = GetComponent<GetBallScript>();
-
+        throwPoint = transform.Find("ThrowPoint");
         ball = getBallScript.ball;
         ballRB = getBallScript.ballRB;
     }
@@ -54,11 +54,11 @@ public class GrabBall : MonoBehaviour
 
     public void ReleaseBall()
     {
-
+        // Remove the Fixed Joint component from the ball
+        Destroy(fixedJoint);
         // Release the ball
         ball.transform.parent = null;
         holdingBall = false;
-        // Remove the Fixed Joint component from the ball
-        Destroy(fixedJoint);
+        
     }
 }

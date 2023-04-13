@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 using Valve.VR;
 
 public class GrabObject : MonoBehaviour
@@ -15,8 +13,8 @@ public class GrabObject : MonoBehaviour
     private Interactable CurrentInteractable = null;
     // List of the interactables in contact with object
     private List<Interactable> ContactInteractables = new List<Interactable>();
-    
-   
+
+
 
     private void Awake()
     {
@@ -62,17 +60,17 @@ public class GrabObject : MonoBehaviour
             return;
         //Already Held Check
         if (CurrentInteractable.ActiveHand != null)
-            CurrentInteractable.ActiveHand.Drop();
+            //CurrentInteractable.ActiveHand.Drop();
 
-        //Position Interactable to controller
-        CurrentInteractable.transform.position = transform.position;
+            //Position Interactable to controller
+            CurrentInteractable.transform.position = transform.position;
 
         //Attach
         Rigidbody targetBody = CurrentInteractable.GetComponent<Rigidbody>();
         Joint.connectedBody = targetBody;
 
         //Set Active Hand
-        CurrentInteractable.ActiveHand = this;
+        //CurrentInteractable.ActiveHand = this;
 
     }
 
@@ -99,13 +97,13 @@ public class GrabObject : MonoBehaviour
     {
         Interactable nearest = null;
         float minDistance = float.MaxValue;
-        float distance= 0.0f;
+        float distance = 0.0f;
 
-        foreach( Interactable interactable in ContactInteractables)
+        foreach (Interactable interactable in ContactInteractables)
         {
             distance = (interactable.transform.position - transform.position).sqrMagnitude;
 
-            if(distance < minDistance)
+            if (distance < minDistance)
             {
                 minDistance = distance;
                 nearest = interactable;

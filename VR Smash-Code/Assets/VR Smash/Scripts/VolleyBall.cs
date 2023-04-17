@@ -1,4 +1,5 @@
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class VolleyBall : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class VolleyBall : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+    }
+
+    public void Update()
+    {
+        if()
     }
 
 

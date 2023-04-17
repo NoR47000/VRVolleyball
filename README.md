@@ -12,3 +12,7 @@ Window> rendering> pipeline converter
 add shadder for transparency and change alpha for transparency
 
 Go to File >Build settings > player settings > XR-plugin Managment and add Open VR Loader
+
+Go to Window > SteamVR Input, click on save and generate 
+
+Then start project

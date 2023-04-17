@@ -1736,85 +1736,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1574426677 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9047970310181769848, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-  m_PrefabInstance: {fileID: 2085665755}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1574426684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574426677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 922d74eb21b62bf41bfd0ff7073d2e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActiveHand: {fileID: 0}
---- !u!1001 &2085665755
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 9047970310181769848, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_Name
-      value: VolleyBall
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769848, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_TagString
-      value: Interactable
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.494
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.351
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.8736181
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047970310181769854, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
 --- !u!1 &1000008669995317
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,3 +3198,60 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.007633208, y: 0, z: 0}
     m_Extent: {x: 0.009633208, y: 1.2246467e-19, z: 0.0019999999}
   m_DirtyAABB: 0
+--- !u!1001 &8836716702509549697
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 518628686030512418, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_Name
+      value: VolleyBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.494
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.351
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bb05f88fddbaca44190d55888d264916, type: 3}

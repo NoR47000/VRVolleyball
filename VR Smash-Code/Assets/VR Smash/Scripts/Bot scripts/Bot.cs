@@ -25,7 +25,7 @@ public class Bot : MonoBehaviour
     // Throw ball after delay
     private float delay = 0f;
     // DelayLimit
-    private float delayLimit = 4f;
+    private readonly float delayLimit = 4f;
 
 
     // All Scripts called

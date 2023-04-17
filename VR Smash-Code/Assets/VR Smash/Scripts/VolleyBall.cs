@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using Valve.VR.InteractionSystem;
 
 public class VolleyBall : MonoBehaviour
@@ -6,19 +7,26 @@ public class VolleyBall : MonoBehaviour
     // Movement value under which the ball is stopped
     public float stopThreshold = 0.1f;
 
+    // Trigger delay before ball is ungrabbable
+    private readonly float triggerDelay = 0.1f;
+
     // Height under which the code enters the if
-    private float groundThreshold = 0.5f;
+    private readonly float groundThreshold = 0.5f;
     private Rigidbody rb;
 
+    private bool canGrab = false;
 
-    private Hand leftHand;
-    private Hand rightHand;
+    // Get right and left hands to act on trigger
+    private MeshCollider leftHand;
+    private MeshCollider rightHand;
+
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
-        rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
+        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>().GetComponent<MeshCollider>();
+        rightHand = GameObject.Find("RightHand").GetComponent<Hand>().GetComponent<MeshCollider>();
     }
 
     void FixedUpdate()
@@ -39,20 +47,19 @@ public class VolleyBall : MonoBehaviour
     {
         if (transform.position.y > groundThreshold )
         {
-            leftHand.HideGrabHint();
-            rightHand.HideGrabHint();
-
-            leftHand.GetComponent<SphereCollider>().isTrigger = false;
-            rightHand.GetComponent<SphereCollider>().isTrigger = false;
-
+            if (canGrab)
+            {
+                StartCoroutine(DisableGrab());
+            }
         }
         else
         {
-            leftHand.ShowGrabHint();
-            rightHand.ShowGrabHint();
-
-            leftHand.GetComponent<SphereCollider>().isTrigger = true;
-            rightHand.GetComponent<SphereCollider>().isTrigger = true;
+            if (!canGrab)
+            {
+                leftHand.isTrigger = true;
+                rightHand.isTrigger = true;
+                canGrab = true;
+            }
         }
     }
 
@@ -98,5 +105,13 @@ public class VolleyBall : MonoBehaviour
         landingPoint.z = z0;
 
         return landingPoint;
+    }
+
+    private IEnumerator DisableGrab()
+    {
+        yield return new WaitForSeconds(triggerDelay);
+        leftHand.isTrigger = false;
+        rightHand.isTrigger = false;
+        canGrab = false;
     }
 }

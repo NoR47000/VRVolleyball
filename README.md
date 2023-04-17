@@ -15,4 +15,6 @@ Go to File >Build settings > player settings > XR-plugin Managment and add Open 
 
 Go to Window > SteamVR Input, click on save and generate 
 
+Set Hand layer to default?
+
 Then start project

@@ -914,7 +914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1452186593}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: ObjectAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1452256847}
   - component: {fileID: 1445364467}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: ControllerButtonHints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,7 +999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1452193139}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: HoverPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1052,7 +1052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1452224759}
   - component: {fileID: 1445375675}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: ControllerButtonHints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1074,7 @@ GameObject:
   - component: {fileID: 114000013408246744}
   - component: {fileID: 114000013408246746}
   - component: {fileID: 114000013408246745}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 1567305297}
   - component: {fileID: 114000012724340312}
   - component: {fileID: 114000012724340311}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2053,7 +2053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000011076276379}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: HoverPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2069,7 +2069,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000012187715599}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: ObjectAttachmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2935,9 +2935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce58192ba81fa4f448cad9b430c77b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GrabAction:
-    actionPath: 
-    needsReinit: 0
 --- !u!138 &114000012724340311
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -3205,6 +3202,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 518628686030512416, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512416, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 518628686030512416, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 518628686030512418, guid: bb05f88fddbaca44190d55888d264916, type: 3}
       propertyPath: m_Name
       value: VolleyBall
@@ -3251,6 +3260,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 518628686030512420, guid: bb05f88fddbaca44190d55888d264916, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836716704022139062, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836716704022139062, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+      propertyPath: snapAttachEaseInCompleted
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

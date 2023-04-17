@@ -10,9 +10,15 @@ public class VolleyBall : MonoBehaviour
     private float groundThreshold = 0.5f;
     private Rigidbody rb;
 
-    void Start()
+
+    private Hand leftHand;
+    private Hand rightHand;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
+        rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
     }
 
     void FixedUpdate()
@@ -31,7 +37,23 @@ public class VolleyBall : MonoBehaviour
 
     public void Update()
     {
-        if()
+        if (transform.position.y > groundThreshold )
+        {
+            leftHand.HideGrabHint();
+            rightHand.HideGrabHint();
+
+            leftHand.GetComponent<SphereCollider>().isTrigger = false;
+            rightHand.GetComponent<SphereCollider>().isTrigger = false;
+
+        }
+        else
+        {
+            leftHand.ShowGrabHint();
+            rightHand.ShowGrabHint();
+
+            leftHand.GetComponent<SphereCollider>().isTrigger = true;
+            rightHand.GetComponent<SphereCollider>().isTrigger = true;
+        }
     }
 
 

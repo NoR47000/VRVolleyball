@@ -18,6 +18,6 @@ Go to Window > SteamVR Input, click on save and generate
 
 Add mesh collider to leftHand and rightHand Objects to player gameObject in the scene (player > steamVRObjects). 
 Unselect the Sphere Collider in both hands.
-Add the bounciness material to the mesh collider created in VRSmash.
+
 
 Then start project

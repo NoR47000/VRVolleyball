@@ -502,3 +502,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb05f88fddbaca44190d55888d264916, type: 3}
+--- !u!1 &8981853387715422816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5862943922867128870, guid: 6a5da62ff4ac23c48a0ef6d6e5252b17, type: 3}
+  m_PrefabInstance: {fileID: 3312582785921540166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8981853387721407253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8981853387715422816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c50104bea1fb21479084e0fd7ba873a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputSource: 1
+  controllerPoseAction:
+    actionPath: /actions/default/in/Pose
+    needsReinit: 1
+  jumpHeight: 3
+  jumpDuration: 1

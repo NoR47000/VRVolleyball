@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using Valve.VR.InteractionSystem;
 
 public class VolleyBall : MonoBehaviour
@@ -19,6 +19,8 @@ public class VolleyBall : MonoBehaviour
     // Get right and left hands to act on trigger
     private MeshCollider leftHand;
     private MeshCollider rightHand;
+
+    public int numberOfTouches = 0;
 
 
 
@@ -45,7 +47,7 @@ public class VolleyBall : MonoBehaviour
 
     public void Update()
     {
-        if (transform.position.y > groundThreshold )
+        if (transform.position.y > groundThreshold)
         {
             if (canGrab)
             {
@@ -67,43 +69,29 @@ public class VolleyBall : MonoBehaviour
     public Vector3 BallLandingPoint()
     {
 
-        Vector3 landingPoint = new Vector3(0, 0, 0);
         // Ball speed
-        Vector3 velocity = rb.velocity;
+        float v0x = rb.velocity.x;
+        float v0y = rb.velocity.y;
+        float v0z = rb.velocity.z;
         // Ball position
         float x0 = rb.position.x;
         float y0 = rb.position.y;
         float z0 = rb.position.z;
+        // Gravity constant
+        float g = 9.81f;
 
-        if (velocity.magnitude <= 0)
+        Vector3 landingPoint = new Vector3(x0, 0, z0);
+
+        if (rb.velocity.magnitude >= 0.5f)
         {
-            landingPoint.x = x0;
-        }
-        else
-        {
-            float v0 = Mathf.Sqrt((velocity.x) * (velocity.x) + (velocity.y) * (velocity.y) + (velocity.z) * (velocity.z));
-
-            // Angle at which it is thrown
-            float alpha = Vector3.Angle(velocity, new Vector3(1, 0, 0));
-
-            // Necessary variable
-            float g = Physics.gravity.y;
-
-            // Calculus to resolve 0 = A*x^2 + B*x + C
-            float A = -g / (2 * Mathf.Cos(alpha) * v0 * v0);
-            float B = -2 * x0 * A + Mathf.Tan(alpha);
-            float C = A * x0 * x0 - Mathf.Tan(alpha) * x0 + y0;
-
-            // Roots of the equation
-            if (A * C > 0)
+            if (Mathf.Pow(v0y, 2) - 2 * g * y0 >= 0)
             {
-                landingPoint.x = (-B + Mathf.Sqrt(4 * A * C)) / (2 * A);
+                float t = (-v0y + Mathf.Sqrt(Mathf.Pow(v0y, 2) - 2 * g * y0)) / g;
+                landingPoint.x = x0 + v0x * t + 1 / 2 * g * Mathf.Pow(t, 2);
+                landingPoint.y = transform.localScale.y / 2;
+                landingPoint.z = z0 + v0z * t + 1 / 2 * g * Mathf.Pow(t, 2);
             }
         }
-
-        landingPoint.y = 0;
-        landingPoint.z = z0;
-
         return landingPoint;
     }
 

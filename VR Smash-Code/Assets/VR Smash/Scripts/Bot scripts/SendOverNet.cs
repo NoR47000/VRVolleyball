@@ -14,12 +14,12 @@ public class SendOverNet : MonoBehaviour
     public Transform net;
 
     // Net's height
-    private float netHeight = 2.43f;
+    private float netHeight = 2.5f;
     // The distance between the player and the net
     public float netDistance;
 
     // The force to apply to the ball when it's thrown
-    public float throwForce = 10.0f;
+    public float throwForce = 0f;
 
     // GetBall script to get ball GameObject
     [HideInInspector] public GetBallScript getBallScript;
@@ -37,10 +37,9 @@ public class SendOverNet : MonoBehaviour
     {
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
-        Debug.Log("throwforce :" + throwForce);
+        Debug.Log(throwPoint.forward * throwForce);
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
-        Debug.Log("applied?");
     }
 
     // Adapts the Orientation of the throw to the height of the net

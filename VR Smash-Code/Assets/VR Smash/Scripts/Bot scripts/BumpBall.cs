@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class BumpBall : MonoBehaviour
 {
-    // The ball object
-    private GameObject ball;
-
     //get ball rigidbody
     private Rigidbody ballRB;
+
+    // Find Bot Ally 
+    private GameObject ally;
 
     // Ally position
     private Transform allyTransform;
 
     // GetBall script to get ball GameObject
     [HideInInspector] public GetBallScript getBallScript;
+    // Bot script to get Ally
+    [HideInInspector] public Bot botScript;
 
     // Bumps Height
     //private float bumpHeight = 3.0f;
@@ -20,8 +22,9 @@ public class BumpBall : MonoBehaviour
     private void Awake()
     {
         getBallScript = GetComponent<GetBallScript>();
-
-        ball = getBallScript.ball;
+        botScript = GetComponent<Bot>();
+        ally = botScript.ally;
+        allyTransform = ally.GetComponent<Transform>();
         ballRB = getBallScript.ballRB;
     }
 

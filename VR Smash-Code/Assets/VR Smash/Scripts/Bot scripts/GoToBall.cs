@@ -20,7 +20,7 @@ public class GoToBall : MonoBehaviour
     private float moveSpeed = 10.0f;
 
     // VolleyBall script
-    [HideInInspector] public VolleyBall volleyBall;
+    [HideInInspector] public VolleyBall volleyBallScript;
     // GetBall script to get ball GameObject
     [HideInInspector] public GetBallScript getBallScript;
 
@@ -30,7 +30,8 @@ public class GoToBall : MonoBehaviour
 
         ball = getBallScript.ball;
         ballRB = getBallScript.ballRB;
-        volleyBall = GetComponent<VolleyBall>();
+        volleyBallScript = ball.GetComponent<VolleyBall>();
+
         grabBall = GetComponent<GrabBall>();
         grabDistance = grabBall.grabDistance;
     }
@@ -102,7 +103,7 @@ public class GoToBall : MonoBehaviour
     // Moves the bot when the ball is in the air
     public void MoveBotBallInAir()
     {
-        Vector3 ballLandingPoint = volleyBall.BallLandingPoint();
+        Vector3 ballLandingPoint = volleyBallScript.BallLandingPoint();
 
         // Get player position in x,z plain
         Vector3 positionProjected = new Vector3(transform.position.x, 0, transform.position.z);

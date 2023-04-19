@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bot : MonoBehaviour
@@ -25,7 +26,11 @@ public class Bot : MonoBehaviour
     // Throw ball after delay
     private float delay = 0f;
     // DelayLimit
-    private readonly float delayLimit = 4f;
+    private readonly float delayLimit = 2f;
+    // Check if ball is being hold by the bot
+    private bool serve = false;
+    //Check if ball is being thrown so it isn't called more than once a pickup
+    private bool isThrowing = false;
 
 
     // All Scripts called
@@ -59,6 +64,7 @@ public class Bot : MonoBehaviour
         ball = getBallScript.ball;
         ballRB = getBallScript.ballRB;
         volleyBall = ball.GetComponent<VolleyBall>();
+        nbOfTouch = volleyBall.numberOfTouches;
     }
 
     // Update is called once per frame
@@ -73,9 +79,10 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
-        
+
         if (BallStopped() && goToBall.BallInZone())
         {
+            serve = true;
             // Grabs the ball and orients the throwPoint
             if (BallTouchGround() && IAmCloser())
             {
@@ -84,12 +91,16 @@ public class Bot : MonoBehaviour
             }
             else
             {
-                Debug.Log(delay);
-                if (delay > delayLimit)
+                if (delay >= delayLimit && !isThrowing)
                 {
+                    Debug.Log("Enters ?");
+                    delay = 0;
+                    isThrowing = true;
                     grabBall.ReleaseBall();
                     sendOverNet.SendOver();
-                    delay = 0;
+                    isThrowing = false;
+                    StartCoroutine(IsNotHoldingBall());
+                    return;
                 }
                 else
                 {
@@ -98,18 +109,31 @@ public class Bot : MonoBehaviour
                 }
             }
         }
-        else if (!BallTouchGround() && LandingPointInZone())
+        else if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
             Debug.Log("nb of touches" + nbOfTouch);
             if (nbOfTouch == 0 || nbOfTouch == 1)
             {
-                Debug.Log("Ball>No Touch");
                 if (IAmCloser())
                 {
-                    Debug.Log("MoveBiatchx");
                     goToBall.MoveBotBallInAir();
-                    //bumpBall.BumpToAlly();
+                    // Distance from the ball
+                    float distance = Vector3.Distance(transform.position, ball.transform.position) - transform.localScale.magnitude;
+                    if (distance <= 0.1f)
+                    {
+                        ballRB.velocity = Vector3.zero;
+                        bumpBall.BumpToAlly();
+                        nbOfTouch++;
+                        return;
+                    }
                 }
+            }
+            else if (nbOfTouch == 2)
+            {
+                Debug.Log("sendOver");
+                ballRB.velocity = Vector3.zero;
+                sendOverNet.SendOver();
+                nbOfTouch = 0;
             }
         }
 
@@ -199,6 +223,10 @@ public class Bot : MonoBehaviour
         return false;
     }
 
-
+    private IEnumerator IsNotHoldingBall()
+    {
+        yield return new WaitForSeconds(0.5f);
+        serve = false;
+    }
 
 }

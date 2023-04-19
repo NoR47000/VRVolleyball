@@ -111,8 +111,6 @@ public class GoToBall : MonoBehaviour
         // Get distance to ball
         float distanceToBall = Vector3.Distance(ballLandingPoint, positionProjected);
 
-        Debug.Log("MoveBall");
-
         if (grabDistance <= (distanceToBall + 0.1))
         {
             // Calculate the new position the player will have

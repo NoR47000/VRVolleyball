@@ -93,7 +93,6 @@ public class Bot : MonoBehaviour
             {
                 if (delay >= delayLimit && !isThrowing)
                 {
-                    Debug.Log("Enters ?");
                     delay = 0;
                     isThrowing = true;
                     grabBall.ReleaseBall();
@@ -111,7 +110,6 @@ public class Bot : MonoBehaviour
         }
         else if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
-            Debug.Log("nb of touches" + nbOfTouch);
             if (nbOfTouch == 0 || nbOfTouch == 1)
             {
                 if (IAmCloser())
@@ -226,7 +224,7 @@ public class Bot : MonoBehaviour
     private IEnumerator IsNotHoldingBall()
     {
         yield return new WaitForSeconds(0.5f);
-        serve = false;
+        serve = false; // chack if it doesn't hinder the bot's movement when in the air
     }
 
 }

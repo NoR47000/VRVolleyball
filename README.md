@@ -14,6 +14,10 @@ add shadder for transparency and change alpha for transparency
 Go to File >Build settings > player settings > XR-plugin Managment and add Open VR Loader
 
 Go to Window > SteamVR Input, click on save and generate 
+Body needs to not interact with itself otherwise the hands arm and body will collide
+and create an unstoppable vibration, 
+if it does, go to Edit> Project Settings> Physics
+find the interaction matrix and unselect the BodyxBody checkbox 
 
 
 Add mesh collider to leftHand and rightHand Objects to player gameObject in the scene (player > steamVRObjects). 

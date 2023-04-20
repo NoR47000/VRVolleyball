@@ -11,7 +11,7 @@ public class Player_jump : MonoBehaviour
 
     public float jumpHeight = 2f;
     public float jumpDuration = 1.0f;
-    public float jumpThreshold = 1.5f;
+    public float jumpThreshold = 3f;
     public float jumpForce = 100f;
 
     private Rigidbody rb; // Player RB

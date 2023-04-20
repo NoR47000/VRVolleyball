@@ -1555,8 +1555,8 @@ GameObject:
   - component: {fileID: 6302313863832360095}
   - component: {fileID: 6302313920293343640}
   - component: {fileID: 6302313920293343642}
-  - component: {fileID: 6302313920293343641}
   - component: {fileID: 6302313920293343643}
+  - component: {fileID: 6302313920293343641}
   m_Layer: 8
   m_Name: RightHand
   m_TagString: Untagged
@@ -1714,6 +1714,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &6302313920293343643
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260939676384270551}
+  m_Material: {fileID: 13400000, guid: 6bf197b56e27ee24b99cd10964b65724, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!138 &6302313920293343641
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -1729,20 +1743,6 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!64 &6302313920293343643
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6260939676384270551}
-  m_Material: {fileID: 13400000, guid: 6bf197b56e27ee24b99cd10964b65724, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &6260939676384286949
 GameObject:
   m_ObjectHideFlags: 0

@@ -135,7 +135,6 @@ public class Bot : MonoBehaviour
                     goToBall.MoveBotBallInAir();
                     // Distance from the ball
                     float distance = Vector3.Distance(transform.position, ball.transform.position) - transform.localScale.magnitude;
-                    Debug.Log(distance);
                     if (Mathf.Abs(distance) <= 0.1f)
                     {
                         Debug.Log("bumpBall");

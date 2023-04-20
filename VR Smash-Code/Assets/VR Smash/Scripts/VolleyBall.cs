@@ -22,6 +22,9 @@ public class VolleyBall : MonoBehaviour
 
     public int numberOfTouches = 0;
 
+    // Keeps tracks of the ball changing sides
+    //private float referenceX = 0; for future use
+
 
 
     void Awake()
@@ -43,6 +46,7 @@ public class VolleyBall : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+
     }
 
     public void Update()

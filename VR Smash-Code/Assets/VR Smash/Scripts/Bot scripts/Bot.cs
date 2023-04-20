@@ -23,6 +23,10 @@ public class Bot : MonoBehaviour
 
     // nb of touches in friendly rally
     public int nbOfTouch = 0;
+
+    // Bot's turn to touch the ball
+    public bool myTouch = true;
+
     // Throw ball after delay
     private float delay = 0f;
     // DelayLimit
@@ -46,16 +50,27 @@ public class Bot : MonoBehaviour
     [HideInInspector] public GrabBall grabBall;
     // BumpBall script
     [HideInInspector] public SendOverNet sendOverNet;
+    // Ally bot script
+    [HideInInspector] public Bot allyScript;
 
 
 
     // Awake is only called once
-    private void Awake()
+    private void Start()
     {
         // Get Components
         botRB = GetComponent<Rigidbody>();
         getBallScript = GetComponent<GetBallScript>();
         allyRB = ally.GetComponent<Rigidbody>();
+        if (ally.GetComponent<Bot>())
+        {
+            allyScript = ally.GetComponent<Bot>();
+        }
+        else
+        {
+            //allyScript = ally.GetComponent<PlayerInfo>;
+        }
+
         goToBall = GetComponent<GoToBall>();
         bumpBall = GetComponent<BumpBall>();
         grabBall = GetComponent<GrabBall>();
@@ -79,26 +94,29 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
-
         if (BallStopped() && goToBall.BallInZone())
         {
-            serve = true;
             // Grabs the ball and orients the throwPoint
             if (BallTouchGround() && IAmCloser())
             {
+                serve = true;
                 goToBall.MoveBotBallStopped();
                 grabBall.AttachBall();
+                return;
             }
             else
             {
-                if (delay >= delayLimit && !isThrowing)
+                if (delay >= delayLimit)
                 {
                     delay = 0;
-                    isThrowing = true;
                     grabBall.ReleaseBall();
                     sendOverNet.SendOver();
-                    isThrowing = false;
+
                     StartCoroutine(IsNotHoldingBall());
+                    nbOfTouch = 0;
+                    serve = false;
+                    Debug.Log("serve");
+
                     return;
                 }
                 else
@@ -110,18 +128,22 @@ public class Bot : MonoBehaviour
         }
         else if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
-            if (nbOfTouch == 0 || nbOfTouch == 1)
+            if ((nbOfTouch == 0 && IAmCloser()) || nbOfTouch == 1)
             {
-                if (IAmCloser())
+                if (myTouch)
                 {
                     goToBall.MoveBotBallInAir();
                     // Distance from the ball
                     float distance = Vector3.Distance(transform.position, ball.transform.position) - transform.localScale.magnitude;
-                    if (distance <= 0.1f)
+                    Debug.Log(distance);
+                    if (Mathf.Abs(distance) <= 0.1f)
                     {
+                        Debug.Log("bumpBall");
                         ballRB.velocity = Vector3.zero;
                         bumpBall.BumpToAlly();
                         nbOfTouch++;
+                        myTouch = false;
+                        allyScript.myTouch = true;
                         return;
                     }
                 }
@@ -129,45 +151,14 @@ public class Bot : MonoBehaviour
             else if (nbOfTouch == 2)
             {
                 Debug.Log("sendOver");
+                goToBall.MoveBotBallInAir();
                 ballRB.velocity = Vector3.zero;
                 sendOverNet.SendOver();
+                myTouch = true;
                 nbOfTouch = 0;
+                return;
             }
         }
-
-
-        //if (grabBall.holdingBall && delay < delayLimit)
-        //{
-        //    delay += Time.deltaTime;
-        //    return;
-        //}
-        //// Ball in bot's zone and on ground
-        //if (BallOnGround() && BallStopped() && goToBall.BallInZone())
-        //{
-        //    goToBall.MoveBotBallStopped();
-        //    grabBall.AttachBall();
-        //    sendOverNet.ThrowPointOrientation();
-        //    Thread.Sleep(3000);
-        //    grabBall.ReleaseBall();
-        //    sendOverNet.SendOver();
-        //}
-        //// Ball in air, creating exchange
-        //if (!BallOnGround() && LandingPointInZone())
-        //{
-        //    if (nbOfTouch == 0 && nbOfTouch == 1)
-        //    {
-        //        if (IAmCloser())
-        //        {
-        //            goToBall.MoveBotBallInAir();
-        //            bumpBall.BumpToAlly();
-        //        }
-        //    }
-        //    if (nbOfTouch == 2)
-        //    {
-        //        //Attack()
-        //        sendOverNet.SendOver();
-        //    }
-        //}
     }
 
 
@@ -224,7 +215,7 @@ public class Bot : MonoBehaviour
     private IEnumerator IsNotHoldingBall()
     {
         yield return new WaitForSeconds(0.5f);
-        serve = false; // chack if it doesn't hinder the bot's movement when in the air
+        // chack if it doesn't hinder the bot's movement when in the air
     }
 
 }

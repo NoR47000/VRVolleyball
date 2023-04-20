@@ -37,7 +37,6 @@ public class SendOverNet : MonoBehaviour
     {
         // Strength needed for the throw
         throwForce = StrengthOfThrow();
-        Debug.Log(throwPoint.forward * throwForce);
         // Apply a force to the ball
         ball.GetComponent<Rigidbody>().AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
     }

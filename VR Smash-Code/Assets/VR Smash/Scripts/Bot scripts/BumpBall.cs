@@ -17,7 +17,7 @@ public class BumpBall : MonoBehaviour
     [HideInInspector] public Bot botScript;
 
     // Bumps Height
-    //private float bumpHeight = 3.0f;
+    public float bumpHeight = 4.5f;
 
     private void Awake()
     {
@@ -31,31 +31,26 @@ public class BumpBall : MonoBehaviour
     // Bump ball to ally
     public void BumpToAlly()
     {
-        Vector3 v0 = bumpForce();
-        ballRB.velocity = v0;
+        Vector3 throwVelocity = CalculateThrowVelocity();
+        ballRB.velocity = throwVelocity;
     }
 
     // Calculate the force needed to send the ball to the ally with a height of bumpHeight
-    private Vector3 bumpForce()
+    private Vector3 CalculateThrowVelocity()
     {
-        // Vector representing the speed needed at the contact time to redirect ball near the ally
-        Vector3 v0;
-        // Wanted arrival position near ally
-        Vector3 arrivalPosition = new(allyTransform.position.x, allyTransform.position.y + 0.07f, allyTransform.position.z);
-        // Position where the ball arrives near the bot
-        Vector3 startPosition = ballRB.position;
+        Vector3 targetDir = allyTransform.position - ballRB.position;
+        float horizontalDist = new Vector3(targetDir.x, 0, targetDir.z).magnitude;
+        float verticalDist = targetDir.y;
 
-        // Gravity constant 
-        float g = Physics.gravity.y;
+        float gravity = Physics.gravity.magnitude;
+        float angle = Mathf.Atan((verticalDist + bumpHeight) / horizontalDist);
+        float speed = Mathf.Sqrt((horizontalDist * gravity) / Mathf.Sin(2 * angle));
 
-        // X,Y,Z initial axial speeds needed to reach the arrival position
-        float v0x = Mathf.Sqrt(-g * startPosition.x * (arrivalPosition.x - startPosition.x / (arrivalPosition.y - startPosition.y)));
-        float v0y = g * (arrivalPosition.x - 3 * startPosition.x) / (2 * v0x);
-        float v0z = v0x * (arrivalPosition.z - startPosition.z) / (arrivalPosition.x - startPosition.x);
+        Vector3 direction = new Vector3(targetDir.x, 0, targetDir.z).normalized;
+        Vector3 upwardVelocity = Mathf.Sin(angle) * speed * Vector3.up;
+        Vector3 forwardVelocity = direction * speed * Mathf.Cos(angle);
 
-        v0 = new Vector3(v0x, v0y, v0z);
-
-        return v0;
+        return upwardVelocity + forwardVelocity;
     }
 
 

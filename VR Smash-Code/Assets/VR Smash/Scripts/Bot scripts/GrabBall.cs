@@ -59,6 +59,5 @@ public class GrabBall : MonoBehaviour
         // Release the ball
         ball.transform.parent = null;
         holdingBall = false;
-        
     }
 }

@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &225054604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6871904301399183940, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-  m_PrefabInstance: {fileID: 701623481}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &247080453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9047970310181769848, guid: 5cd722026e792eb4ca45a8223d8528cd, type: 3}
@@ -141,53 +136,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 630131726690844566, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 630131726690844566, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: zone
       value: 
       objectReference: {fileID: 1449033259}
-    - target: {fileID: 3405330861181653532, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 4404588591026002157, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
     - target: {fileID: 4571010497036212836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: net
       value: 
       objectReference: {fileID: 2073059643}
-    - target: {fileID: 4571010497036212836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 4571010497036212836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: throwPoint
-      value: 
-      objectReference: {fileID: 225054604}
     - target: {fileID: 5128557693983623836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: ally
       value: 
       objectReference: {fileID: 1194379537}
     - target: {fileID: 5128557693983623836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 5128557693983623836, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: zone
       value: 
       objectReference: {fileID: 1449033259}
-    - target: {fileID: 5762141017000484167, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 5762141017000484167, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
-      propertyPath: throwPoint
-      value: 
-      objectReference: {fileID: 225054604}
     - target: {fileID: 7943363779514669165, guid: 673a7b021d2921c41925cc5866018b17, type: 3}
       propertyPath: ball
       value: 
@@ -718,34 +681,14 @@ PrefabInstance:
       propertyPath: ball
       value: 
       objectReference: {fileID: 247080453}
-    - target: {fileID: 2159254887082863807, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 2159254887082863807, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: throwPoint
-      value: 
-      objectReference: {fileID: 1940336982}
     - target: {fileID: 2337050034398884093, guid: 8324db68367493c4986634108fe26d28, type: 3}
       propertyPath: net
       value: 
       objectReference: {fileID: 2073059643}
-    - target: {fileID: 2337050034398884093, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 2337050034398884093, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: throwPoint
-      value: 
-      objectReference: {fileID: 1940336982}
     - target: {fileID: 4608236072227216348, guid: 8324db68367493c4986634108fe26d28, type: 3}
       propertyPath: ally
       value: 
       objectReference: {fileID: 1154402110}
-    - target: {fileID: 4608236072227216348, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
     - target: {fileID: 4608236072227216348, guid: 8324db68367493c4986634108fe26d28, type: 3}
       propertyPath: zone
       value: 
@@ -799,28 +742,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6390860859348514470, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 6390860859348514470, guid: 8324db68367493c4986634108fe26d28, type: 3}
       propertyPath: zone
       value: 
       objectReference: {fileID: 1707114501}
-    - target: {fileID: 8383118752523425521, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: ball
-      value: 
-      objectReference: {fileID: 247080453}
-    - target: {fileID: 8395608075648698830, guid: 8324db68367493c4986634108fe26d28, type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8324db68367493c4986634108fe26d28, type: 3}
---- !u!4 &1940336982 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3315840219059854174, guid: 8324db68367493c4986634108fe26d28, type: 3}
-  m_PrefabInstance: {fileID: 1940336981}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1940336983 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5450979494073288478, guid: 8324db68367493c4986634108fe26d28, type: 3}

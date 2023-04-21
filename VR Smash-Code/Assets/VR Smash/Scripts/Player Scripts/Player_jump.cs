@@ -7,18 +7,19 @@ public class Player_jump : MonoBehaviour
 {
     public SteamVR_Input_Sources inputSource; //Hand used to swing
     public SteamVR_Action_Pose poseAction; // pose action from controller
+
+    public SteamVR_Action_Pose pressAction; // press action from controller
     public Transform headTransform;
 
     public float jumpHeight = 2f;
     public float jumpDuration = 1.0f;
-    public float jumpThreshold = 3f;
+    private float jumpThreshold = 3f;
     public float jumpForce = 100f;
 
     private Rigidbody rb; // Player RB
     private bool isJumping; // Indication if player is currently jumping
 
-
-    // Start is called before the first frame update
+    //Initialize
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,10 +29,18 @@ public class Player_jump : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 velocity = poseAction.GetVelocity(inputSource);
+        Vector3 velocityLeft = poseAction.GetVelocity(SteamVR_Input_Sources.LeftHand);
+        Vector3 velocityRight = poseAction.GetVelocity(SteamVR_Input_Sources.RightHand);
 
-        if (!isJumping && velocity.y>jumpThreshold)
+        // Player swinging his arms forward and upward
+        // Mean of upwards velocity between both controllers
+        float upVelocity = (velocityLeft.y + velocityRight.y)/2;
+        // Mean of forward velocity magnitude between both controllers
+        float forwardVelocity = (Mathf.Sqrt(Mathf.Pow(velocityRight.x, 2) + Mathf.Pow(velocityRight.z, 2)) + Mathf.Sqrt(Mathf.Pow(velocityLeft.x, 2) + Mathf.Pow(velocityLeft.z, 2)))/2;
+
+        if (!isJumping && upVelocity >= jumpThreshold && forwardVelocity>= jumpThreshold)
         {
+            Debug.Log("velocity" + forwardVelocity +"jumpThreshold"+jumpThreshold);
             rb.velocity = Vector3.up * jumpForce;
             isJumping = true;
         }

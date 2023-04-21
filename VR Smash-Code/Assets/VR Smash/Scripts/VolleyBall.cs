@@ -47,6 +47,11 @@ public class VolleyBall : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
+        if(transform.position.x <transform.localScale.x && transform.position.x > transform.localScale.x)
+        {
+            numberOfTouches = 0;
+        }
+
     }
 
     public void Update()
@@ -105,5 +110,15 @@ public class VolleyBall : MonoBehaviour
         leftHand.isTrigger = false;
         rightHand.isTrigger = false;
         canGrab = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        //Reset isJumping when player lands
+        if (collision.gameObject.name == "Plane")
+        {
+            numberOfTouches = 0;
+        }
     }
 }

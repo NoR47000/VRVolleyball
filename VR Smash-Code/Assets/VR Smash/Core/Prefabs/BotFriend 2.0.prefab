@@ -217,12 +217,15 @@ MonoBehaviour:
   ally: {fileID: 0}
   zone: {fileID: 0}
   nbOfTouch: 0
+  myTouch: 1
   getBallScript: {fileID: 0}
   goToBall: {fileID: 0}
   volleyBall: {fileID: 0}
   bumpBall: {fileID: 0}
   grabBall: {fileID: 0}
   sendOverNet: {fileID: 0}
+  allyScript: {fileID: 0}
+  allyPlayerScript: {fileID: 0}
 --- !u!114 &4404588591026002157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getBallScript: {fileID: 0}
+  botScript: {fileID: 0}
+  bumpHeight: 4.5
 --- !u!114 &630131726690844566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zone: {fileID: 0}
   grabBall: {fileID: 0}
-  volleyBall: {fileID: 0}
+  volleyBallScript: {fileID: 0}
   getBallScript: {fileID: 0}
 --- !u!114 &4571010497036212836
 MonoBehaviour:
@@ -281,7 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabDistance: 1
-  throwPoint: {fileID: 0}
   holdingBall: 0
   fixedJoint: {fileID: 0}
   getBallScript: {fileID: 0}

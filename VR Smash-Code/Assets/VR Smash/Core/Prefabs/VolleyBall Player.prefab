@@ -1264,6 +1264,8 @@ GameObject:
   - component: {fileID: 907903218293770865}
   - component: {fileID: 907903218293770864}
   - component: {fileID: 907903218293770867}
+  - component: {fileID: 880325160}
+  - component: {fileID: 880325166}
   m_Layer: 7
   m_Name: VolleyBall Player
   m_TagString: Untagged
@@ -1353,10 +1355,12 @@ MonoBehaviour:
   poseAction:
     actionPath: /actions/default/in/Pose
     needsReinit: 0
+  pressAction:
+    actionPath: 
+    needsReinit: 0
   headTransform: {fileID: 907903218288030570}
   jumpHeight: 2
   jumpDuration: 1
-  jumpThreshold: 0.3
   jumpForce: 6.8
 --- !u!65 &907903218293770867
 BoxCollider:
@@ -1371,6 +1375,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 1.5, z: 0.25}
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &880325160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907903218287827714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171eafd2b785f6d458c58112896f19c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTouch: 1
+  nbOfTouch: 0
+  ally: {fileID: 0}
+  allyScript: {fileID: 0}
+  volleyBall: {fileID: 0}
+--- !u!114 &880325166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907903218287827714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc56a018fbd7cd24b8eeede17224dd9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  ballRB: {fileID: 0}
+  spawnBallAction:
+    actionPath: /actions/default/in/GrabGrip
+    needsReinit: 0
 --- !u!1 &907903218287828332
 GameObject:
   m_ObjectHideFlags: 0

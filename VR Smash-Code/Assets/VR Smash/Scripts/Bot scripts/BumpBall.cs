@@ -17,7 +17,7 @@ public class BumpBall : MonoBehaviour
     [HideInInspector] public Bot botScript;
 
     // Bumps Height
-    public float bumpHeight = 4.5f;
+    public float bumpHeight = 10f;
 
     private void Awake()
     {

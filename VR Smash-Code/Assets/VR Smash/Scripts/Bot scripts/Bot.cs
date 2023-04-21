@@ -33,8 +33,7 @@ public class Bot : MonoBehaviour
     private readonly float delayLimit = 2f;
     // Check if ball is being hold by the bot
     private bool serve = false;
-    //Check if ball is being thrown so it isn't called more than once a pickup
-    private bool isThrowing = false;
+
 
 
     // All Scripts called
@@ -52,6 +51,8 @@ public class Bot : MonoBehaviour
     [HideInInspector] public SendOverNet sendOverNet;
     // Ally bot script
     [HideInInspector] public Bot allyScript;
+    // Ally player script
+    [HideInInspector] public PlayerInfo allyPlayerScript;
 
 
 
@@ -68,7 +69,7 @@ public class Bot : MonoBehaviour
         }
         else
         {
-            //allyScript = ally.GetComponent<PlayerInfo>;
+            allyPlayerScript = ally.GetComponent<PlayerInfo>();
         }
 
         goToBall = GetComponent<GoToBall>();
@@ -94,39 +95,39 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
-        if (BallStopped() && goToBall.BallInZone())
-        {
-            // Grabs the ball and orients the throwPoint
-            if (BallTouchGround() && IAmCloser())
-            {
-                serve = true;
-                goToBall.MoveBotBallStopped();
-                grabBall.AttachBall();
-                return;
-            }
-            else
-            {
-                if (delay >= delayLimit)
-                {
-                    delay = 0;
-                    grabBall.ReleaseBall();
-                    sendOverNet.SendOver();
+        //if (BallStopped() && goToBall.BallInZone())
+        //{
+        //    // Grabs the ball and orients the throwPoint
+        //    if (BallTouchGround() && IAmCloser())
+        //    {
+        //        serve = true;
+        //        goToBall.MoveBotBallStopped();
+        //        grabBall.AttachBall();
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        if (delay >= delayLimit)
+        //        {
+        //            delay = 0;
+        //            grabBall.ReleaseBall();
+        //            sendOverNet.SendOver();
 
-                    StartCoroutine(IsNotHoldingBall());
-                    nbOfTouch = 0;
-                    serve = false;
-                    Debug.Log("serve");
+        //            StartCoroutine(IsNotHoldingBall());
+        //            nbOfTouch = 0;
+        //            Debug.Log("serve");
 
-                    return;
-                }
-                else
-                {
-                    delay += Time.deltaTime;
-                    return;
-                }
-            }
-        }
-        else if (!BallTouchGround() && LandingPointInZone() && !serve)
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            delay += Time.deltaTime;
+        //            return;
+        //        }
+        //    }
+        //}
+        //else 
+        if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
             if ((nbOfTouch == 0 && IAmCloser()) || nbOfTouch == 1)
             {
@@ -142,7 +143,15 @@ public class Bot : MonoBehaviour
                         bumpBall.BumpToAlly();
                         nbOfTouch++;
                         myTouch = false;
-                        allyScript.myTouch = true;
+                        if (allyScript)
+                        {
+                            allyScript.myTouch = true;
+                        }
+                        else
+                        {
+                            allyPlayerScript.myTouch = true;
+                        }
+                        
                         return;
                     }
                 }
@@ -213,8 +222,9 @@ public class Bot : MonoBehaviour
 
     private IEnumerator IsNotHoldingBall()
     {
-        yield return new WaitForSeconds(0.5f);
-        // chack if it doesn't hinder the bot's movement when in the air
+        yield return new WaitForSeconds(3f);
+        serve = false;
+        Debug.Log("end of corout");
     }
 
 }

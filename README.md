@@ -18,10 +18,11 @@ Body needs to not interact with itself otherwise the hands arm and body will col
 and create an unstoppable vibration, 
 if it does, go to Edit> Project Settings> Physics
 find the interaction matrix and unselect the BodyxBody checkbox 
+Also unselect Body x Dynamic Object
 
-
-Add mesh collider to leftHand and rightHand Objects to player gameObject in the scene (player > steamVRObjects). 
-Unselect the Sphere Collider in both hands.
+Not necessary :
+//Add mesh collider to leftHand and rightHand Objects to player gameObject in the scene (player > steamVRObjects). 
+//Unselect the Sphere Collider in both hands.
 
 
 Then start project

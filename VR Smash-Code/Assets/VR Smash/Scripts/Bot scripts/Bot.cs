@@ -95,38 +95,38 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
-        //if (BallStopped() && goToBall.BallInZone())
-        //{
-        //    // Grabs the ball and orients the throwPoint
-        //    if (BallTouchGround() && IAmCloser())
-        //    {
-        //        serve = true;
-        //        goToBall.MoveBotBallStopped();
-        //        grabBall.AttachBall();
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        if (delay >= delayLimit)
-        //        {
-        //            delay = 0;
-        //            grabBall.ReleaseBall();
-        //            sendOverNet.SendOver();
+        if (BallStopped() && goToBall.BallInZone())
+        {
+            // Grabs the ball and orients the throwPoint
+            if (BallTouchGround() && IAmCloser())
+            {
+                serve = true;
+                goToBall.MoveBotBallStopped();
+                grabBall.AttachBall();
+                return;
+            }
+            else
+            {
+                if (delay >= delayLimit)
+                {
+                    delay = 0;
+                    grabBall.ReleaseBall();
+                    sendOverNet.SendOver();
 
-        //            StartCoroutine(IsNotHoldingBall());
-        //            nbOfTouch = 0;
-        //            Debug.Log("serve");
+                    StartCoroutine(IsNotHoldingBall());
+                    nbOfTouch = 0;
+                    Debug.Log("serve");
 
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            delay += Time.deltaTime;
-        //            return;
-        //        }
-        //    }
-        //}
-        //else 
+                    return;
+                }
+                else
+                {
+                    delay += Time.deltaTime;
+                    return;
+                }
+            }
+        }
+        else
         if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
             if ((nbOfTouch == 0 && IAmCloser()) || nbOfTouch == 1)

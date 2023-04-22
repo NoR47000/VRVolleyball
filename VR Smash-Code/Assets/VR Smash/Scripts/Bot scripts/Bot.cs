@@ -33,6 +33,8 @@ public class Bot : MonoBehaviour
     private readonly float delayLimit = 2f;
     // Check if ball is being hold by the bot
     private bool serve = false;
+    // Ally Script Touch
+    private bool allyTouch;
 
 
 
@@ -57,12 +59,13 @@ public class Bot : MonoBehaviour
 
 
     // Awake is only called once
-    private void Start()
+    private void Awake()
     {
         // Get Components
         botRB = GetComponent<Rigidbody>();
         getBallScript = GetComponent<GetBallScript>();
         allyRB = ally.GetComponent<Rigidbody>();
+
         if (ally.GetComponent<Bot>())
         {
             allyScript = ally.GetComponent<Bot>();
@@ -71,6 +74,8 @@ public class Bot : MonoBehaviour
         {
             allyPlayerScript = ally.GetComponent<PlayerInfo>();
         }
+
+
 
         goToBall = GetComponent<GoToBall>();
         bumpBall = GetComponent<BumpBall>();
@@ -95,41 +100,41 @@ public class Bot : MonoBehaviour
 
     private void ManageBot()
     {
-        //if (BallStopped() && goToBall.BallInZone())
-        //{
-        //    // Grabs the ball and orients the throwPoint
-        //    if (BallTouchGround() && IAmCloser())
-        //    {
-        //        serve = true;
-        //        goToBall.MoveBotBallStopped();
-        //        grabBall.AttachBall();
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        if (delay >= delayLimit)
-        //        {
-        //            delay = 0;
-        //            grabBall.ReleaseBall();
-        //            sendOverNet.SendOver();
-
-        //            StartCoroutine(IsNotHoldingBall());
-        //            nbOfTouch = 0;
-        //            Debug.Log("serve");
-
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            delay += Time.deltaTime;
-        //            return;
-        //        }
-        //    }
-        //}
-        //else
-        if (!BallTouchGround() && LandingPointInZone() && !serve)
+        if (BallStopped() && goToBall.BallInZone())
         {
-            if ((nbOfTouch == 0 && IAmCloser()) || nbOfTouch == 1)
+            // Grabs the ball and orients the throwPoint
+            if (BallTouchGround() && IAmCloser())
+            {
+                serve = true;
+                goToBall.MoveBotBallStopped();
+                grabBall.AttachBall();
+                return;
+            }
+            else
+            {
+                if (delay >= delayLimit && serve)
+                {
+                    delay = 0;
+                    grabBall.ReleaseBall();
+                    sendOverNet.SendOver();
+                    //nbOfTouch = 0;
+
+                    Debug.Log("serve");
+
+                    StartCoroutine(IsNotHoldingBall());
+
+                    return;
+                }
+                else
+                {
+                    delay += Time.deltaTime;
+                    return;
+                }
+            }
+        }
+        else if (!BallTouchGround() && LandingPointInZone() && !serve)
+        {
+            if ((volleyBall.numberOfTouches == 0 && IAmCloser()) || volleyBall.numberOfTouches == 1 && myTouch)
             {
                 if (myTouch)
                 {
@@ -138,10 +143,10 @@ public class Bot : MonoBehaviour
                     float distance = Vector3.Distance(transform.position, ball.transform.position) - transform.localScale.magnitude;
                     if (Mathf.Abs(distance) <= 0.1f)
                     {
-                        Debug.Log("bumpBall");
+                        Debug.Log("Bump" + volleyBall.numberOfTouches);
                         ballRB.velocity = Vector3.zero;
                         bumpBall.BumpToAlly();
-                        nbOfTouch++;
+                        volleyBall.numberOfTouches++;
                         myTouch = false;
                         if (allyScript)
                         {
@@ -151,19 +156,26 @@ public class Bot : MonoBehaviour
                         {
                             allyPlayerScript.myTouch = true;
                         }
-                        
-                        return;
                     }
                 }
             }
-            else if (nbOfTouch == 2)
+            else if (volleyBall.numberOfTouches == 2 && myTouch)
             {
                 Debug.Log("sendOver");
+
                 goToBall.MoveBotBallInAir();
                 ballRB.velocity = Vector3.zero;
                 sendOverNet.SendOver();
                 myTouch = true;
-                nbOfTouch = 0;
+                if (allyScript)
+                {
+                    allyScript.myTouch = true;
+                }
+                else
+                {
+                    allyPlayerScript.myTouch = true;
+                }
+                volleyBall.numberOfTouches = 0;
                 return;
             }
         }

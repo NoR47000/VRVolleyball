@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 
 public class VolleyBall : MonoBehaviour
 {
@@ -22,55 +20,49 @@ public class VolleyBall : MonoBehaviour
 
     public int numberOfTouches = 0;
 
-    // Keeps tracks of the ball changing sides
-    //private float referenceX = 0; for future use
 
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>().GetComponent<MeshCollider>();
-        rightHand = GameObject.Find("RightHand").GetComponent<Hand>().GetComponent<MeshCollider>();
+        //if (GameObject.Find("LeftHand"))
+        //{
+        //    leftHand = GameObject.Find("LeftHand").GetComponent<Hand>().GetComponent<MeshCollider>();
+        //    rightHand = GameObject.Find("RightHand").GetComponent<Hand>().GetComponent<MeshCollider>();
+        //}
     }
+
+
+    public void Update()
+    {
+        //if (transform.position.y > groundThreshold)
+        //{
+        //    if (canGrab)
+        //    {
+        //        StartCoroutine(DisableGrab());
+        //    }
+        //}
+        //else
+        //{
+        //    if (!canGrab)
+        //    {
+        //        leftHand.isTrigger = true;
+        //        rightHand.isTrigger = true;
+        //        canGrab = true;
+        //    }
+        //}
+    }
+
 
     void FixedUpdate()
     {
         //Check if ball is on the ground
         bool ground = (transform.position.y < groundThreshold);
 
-        // Stop the ball's movement if it's on the ground and it is almost stopped
-        // Prevents the ball from rotating indefinitily
-        if (ground && Quaternion.Angle(transform.rotation, Quaternion.identity) < stopThreshold && rb.velocity.magnitude < stopThreshold && rb.velocity != Vector3.zero)
-        {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        if(transform.position.x <transform.localScale.x && transform.position.x > transform.localScale.x)
+        if (transform.position.x < transform.localScale.x && transform.position.x > -transform.localScale.x)
         {
             numberOfTouches = 0;
-        }
-
-    }
-
-    public void Update()
-    {
-        if (transform.position.y > groundThreshold)
-        {
-            if (canGrab)
-            {
-                StartCoroutine(DisableGrab());
-            }
-        }
-        else
-        {
-            if (!canGrab)
-            {
-                leftHand.isTrigger = true;
-                rightHand.isTrigger = true;
-                canGrab = true;
-            }
         }
     }
 
@@ -104,20 +96,23 @@ public class VolleyBall : MonoBehaviour
         return landingPoint;
     }
 
-    private IEnumerator DisableGrab()
-    {
-        yield return new WaitForSeconds(triggerDelay);
-        leftHand.isTrigger = false;
-        rightHand.isTrigger = false;
-        canGrab = false;
-    }
+    //private IEnumerator DisableGrab()
+    //{
+    //    yield return new WaitForSeconds(triggerDelay);
+    //    leftHand.isTrigger = false;
+    //    rightHand.isTrigger = false;
+    //    canGrab = false;
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
 
-        //Reset isJumping when player lands
+        //Reset number of touches if ball falls 
         if (collision.gameObject.name == "Plane")
         {
+            Debug.Log("collides");
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
             numberOfTouches = 0;
         }
     }

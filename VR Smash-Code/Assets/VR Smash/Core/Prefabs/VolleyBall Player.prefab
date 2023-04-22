@@ -56,16 +56,16 @@ MonoBehaviour:
   trackedObject: {fileID: 0}
   grabPinchAction:
     actionPath: /actions/default/in/GrabPinch
-    needsReinit: 0
+    needsReinit: 1
   grabGripAction:
     actionPath: /actions/default/in/GrabGrip
-    needsReinit: 0
+    needsReinit: 1
   hapticAction:
     actionPath: /actions/default/out/Haptic
-    needsReinit: 0
+    needsReinit: 1
   uiInteractAction:
     actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
+    needsReinit: 1
   useHoverSphere: 1
   hoverSphereTransform: {fileID: 907903218287913496}
   hoverSphereRadius: 0.075
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseAction:
     actionPath: /actions/default/in/Pose
-    needsReinit: 0
+    needsReinit: 1
   inputSource: 2
   origin: {fileID: 0}
   onTransformUpdated:
@@ -148,7 +148,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907903218287709692}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6bf197b56e27ee24b99cd10964b65724, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -211,16 +211,16 @@ MonoBehaviour:
   trackedObject: {fileID: 0}
   grabPinchAction:
     actionPath: /actions/default/in/GrabPinch
-    needsReinit: 0
+    needsReinit: 1
   grabGripAction:
     actionPath: /actions/default/in/GrabGrip
-    needsReinit: 0
+    needsReinit: 1
   hapticAction:
     actionPath: /actions/default/out/Haptic
-    needsReinit: 0
+    needsReinit: 1
   uiInteractAction:
     actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
+    needsReinit: 1
   useHoverSphere: 1
   hoverSphereTransform: {fileID: 907388290653360112}
   hoverSphereRadius: 0.075
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseAction:
     actionPath: /actions/default/in/Pose
-    needsReinit: 0
+    needsReinit: 1
   inputSource: 1
   origin: {fileID: 0}
   onTransformUpdated:
@@ -303,7 +303,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907903218287726030}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6bf197b56e27ee24b99cd10964b65724, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -361,16 +361,16 @@ MonoBehaviour:
   trackedObject: {fileID: 0}
   grabPinchAction:
     actionPath: /actions/default/in/GrabPinch
-    needsReinit: 0
+    needsReinit: 1
   grabGripAction:
     actionPath: /actions/default/in/GrabGrip
-    needsReinit: 0
+    needsReinit: 1
   hapticAction:
     actionPath: /actions/default/out/Haptic
-    needsReinit: 0
+    needsReinit: 1
   uiInteractAction:
     actionPath: /actions/default/in/InteractUI
-    needsReinit: 0
+    needsReinit: 1
   useHoverSphere: 1
   hoverSphereTransform: {fileID: 0}
   hoverSphereRadius: 0.05
@@ -620,7 +620,7 @@ MonoBehaviour:
   textHintPrefab: {fileID: 140952, guid: 5fa42bb9e52706a42b8a1eaf0b54326a, type: 3}
   hapticFlash:
     actionPath: /actions/default/out/Haptic
-    needsReinit: 0
+    needsReinit: 1
   autoSetWithControllerRangeOfMotion: 1
   debugHints: 0
 --- !u!1 &907903218287764038
@@ -673,7 +673,7 @@ MonoBehaviour:
   textHintPrefab: {fileID: 140952, guid: 5fa42bb9e52706a42b8a1eaf0b54326a, type: 3}
   hapticFlash:
     actionPath: /actions/default/out/Haptic
-    needsReinit: 0
+    needsReinit: 1
   autoSetWithControllerRangeOfMotion: 1
   debugHints: 0
 --- !u!1 &907903218287766972
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   audioListener: {fileID: 907903218287922178}
   headsetOnHead:
     actionPath: /actions/default/in/HeadsetOnHead
-    needsReinit: 0
+    needsReinit: 1
   allowToggleTo2D: 1
 --- !u!54 &907903218293770865
 Rigidbody:
@@ -2179,10 +2179,10 @@ MonoBehaviour:
   rotateLeftFX: {fileID: 908047809134191294}
   snapLeftAction:
     actionPath: /actions/default/in/SnapTurnLeft
-    needsReinit: 0
+    needsReinit: 1
   snapRightAction:
     actionPath: /actions/default/in/SnapTurnRight
-    needsReinit: 0
+    needsReinit: 1
   fadeScreen: 1
   fadeTime: 0.1
   screenFadeColor: {r: 0, g: 0, b: 0, a: 1}

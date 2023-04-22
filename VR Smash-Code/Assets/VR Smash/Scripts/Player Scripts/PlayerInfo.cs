@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
@@ -7,7 +5,7 @@ public class PlayerInfo : MonoBehaviour
     // Bot's turn to touch the ball
     public bool myTouch = true;
     // nb of touches in friendly rally
-    public int nbOfTouch = 0;
+    public int nbOfTouch;
 
     // The Bot's ally
     public GameObject ally;

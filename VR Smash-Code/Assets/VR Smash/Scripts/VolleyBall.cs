@@ -66,7 +66,7 @@ public class VolleyBall : MonoBehaviour
         }
     }
 
-
+    // Estimation of the ball's landing point
     public Vector3 BallLandingPoint()
     {
 
@@ -104,13 +104,14 @@ public class VolleyBall : MonoBehaviour
     //    canGrab = false;
     //}
 
+
+    // Stops ball when on ground and resets number of touches for game to restart
     private void OnCollisionEnter(Collision collision)
     {
 
         //Reset number of touches if ball falls 
         if (collision.gameObject.name == "Plane")
         {
-            Debug.Log("collides");
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             numberOfTouches = 0;

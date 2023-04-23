@@ -33,8 +33,6 @@ public class Bot : MonoBehaviour
     private readonly float delayLimit = 2f;
     // Check if ball is being hold by the bot
     private bool serve = false;
-    // Ally Script Touch
-    private bool allyTouch;
 
 
 
@@ -99,7 +97,7 @@ public class Bot : MonoBehaviour
     }
 
     private void ManageBot()
-    {
+    {/* Comment first if for VR use */
         if (BallStopped() && goToBall.BallInZone())
         {
             // Grabs the ball and orients the throwPoint
@@ -108,7 +106,6 @@ public class Bot : MonoBehaviour
                 serve = true;
                 goToBall.MoveBotBallStopped();
                 grabBall.AttachBall();
-                return;
             }
             else
             {
@@ -117,22 +114,19 @@ public class Bot : MonoBehaviour
                     delay = 0;
                     grabBall.ReleaseBall();
                     sendOverNet.SendOver();
-                    //nbOfTouch = 0;
 
                     Debug.Log("serve");
 
                     StartCoroutine(IsNotHoldingBall());
 
-                    return;
                 }
                 else
                 {
                     delay += Time.deltaTime;
-                    return;
                 }
             }
         }
-        else if (!BallTouchGround() && LandingPointInZone() && !serve)
+        else /*end of the commenting necessary for VR use*/if (!BallTouchGround() && LandingPointInZone() && !serve)
         {
             if ((volleyBall.numberOfTouches == 0 && IAmCloser()) || volleyBall.numberOfTouches == 1 && myTouch)
             {
@@ -176,7 +170,6 @@ public class Bot : MonoBehaviour
                     allyPlayerScript.myTouch = true;
                 }
                 volleyBall.numberOfTouches = 0;
-                return;
             }
         }
     }
@@ -236,7 +229,6 @@ public class Bot : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         serve = false;
-        Debug.Log("end of corout");
     }
 
 }

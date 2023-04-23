@@ -20,6 +20,8 @@ if it does, go to Edit> Project Settings> Physics
 find the interaction matrix and unselect the BodyxBody checkbox 
 Also unselect Body x Dynamic Object
 
+To start VR don't forget to save and generate the actions in the Window>SteamVR Input
+
 Not necessary :
 //Add mesh collider to leftHand and rightHand Objects to player gameObject in the scene (player > steamVRObjects). 
 //Unselect the Sphere Collider in both hands.

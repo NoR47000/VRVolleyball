@@ -1,4 +1,6 @@
-# VRSmash
+Description : VRVolleyball is, as it name's says a VR Volleyball game that allows the player to simulate the jumping and play with (rudementary) bots. The player uses physics to spike and bump the ball. It is based on the Beach VB game of 2 vs 2.
+
+# VRVolleyball
 add Steam VR for it to work
 go to unity asset store, download steam VR and open with unity then import all
 
